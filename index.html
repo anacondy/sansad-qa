@@ -1,0 +1,3464 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Sansad Q&A — Browse questions and answers from Indian Parliament sessions. Search by MP, session, or topic.">
+    <title>Sansad Q&A — Indian Parliament Questions & Answers</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           CSS CUSTOM PROPERTIES & THEMING
+           ============================================ */
+        
+         :root {
+            --transition-fast: 0.15s ease;
+            --transition-med: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.3);
+            --max-width: 1280px;
+            --header-height: 72px;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #111111;
+            --bg-tertiary: #181818;
+            --bg-card: #141414;
+            --bg-card-hover: #1A1A1A;
+            --bg-elevated: #1E1E1E;
+            --bg-overlay: rgba(0, 0, 0, 0.85);
+            --bg-search: #141414;
+            --border-primary: #222222;
+            --border-secondary: #2A2A2A;
+            --border-accent: #333333;
+            --text-primary: #E8E4E0;
+            --text-secondary: #9A9590;
+            --text-tertiary: #6A6560;
+            --text-muted: #4A4540;
+            --accent: #6B8F64;
+            --accent-hover: #7DA676;
+            --accent-muted: rgba(107, 143, 100, 0.15);
+            --accent-secondary: #8B7355;
+            --accent-secondary-muted: rgba(139, 115, 85, 0.15);
+            --danger: #C45C5C;
+            --warning: #C4A55C;
+            --info: #5C8EC4;
+            --success: #5CC47A;
+            --tag-lok: rgba(107, 143, 100, 0.2);
+            --tag-lok-text: #8FBF85;
+            --tag-rajya: rgba(92, 142, 196, 0.2);
+            --tag-rajya-text: #7CB3E0;
+            --tag-starred: rgba(196, 165, 92, 0.2);
+            --tag-starred-text: #D4C57A;
+            --tag-unstarred: rgba(154, 149, 144, 0.15);
+            --tag-unstarred-text: #9A9590;
+            --grain-opacity: 0.03;
+            --scrollbar-track: #111;
+            --scrollbar-thumb: #333;
+            --skeleton: #1E1E1E;
+            --skeleton-shine: #2A2A2A;
+        }
+        
+        [data-theme="light"] {
+            --bg-primary: #F0EDEA;
+            --bg-secondary: #E8E4E0;
+            --bg-tertiary: #DDD9D5;
+            --bg-card: #FFFFFF;
+            --bg-card-hover: #F8F6F4;
+            --bg-elevated: #FFFFFF;
+            --bg-overlay: rgba(240, 237, 234, 0.92);
+            --bg-search: #FFFFFF;
+            --border-primary: #D4D0CC;
+            --border-secondary: #C8C4C0;
+            --border-accent: #B8B4B0;
+            --text-primary: #1A1816;
+            --text-secondary: #5A5550;
+            --text-tertiary: #8A8580;
+            --text-muted: #AAA5A0;
+            --accent: #4A6F44;
+            --accent-hover: #3D5C38;
+            --accent-muted: rgba(74, 111, 68, 0.12);
+            --accent-secondary: #6B5540;
+            --accent-secondary-muted: rgba(107, 85, 64, 0.1);
+            --danger: #B04040;
+            --warning: #A08030;
+            --info: #4070A0;
+            --success: #408050;
+            --tag-lok: rgba(74, 111, 68, 0.15);
+            --tag-lok-text: #3D5C38;
+            --tag-rajya: rgba(64, 112, 160, 0.15);
+            --tag-rajya-text: #2A5580;
+            --tag-starred: rgba(160, 128, 48, 0.15);
+            --tag-starred-text: #806020;
+            --tag-unstarred: rgba(90, 85, 80, 0.1);
+            --tag-unstarred-text: #5A5550;
+            --grain-opacity: 0.02;
+            --scrollbar-track: #E8E4E0;
+            --scrollbar-thumb: #C4C0BC;
+            --skeleton: #E0DCD8;
+            --skeleton-shine: #EAE6E2;
+        }
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color var(--transition-med), color var(--transition-med);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Film grain overlay */
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: var(--grain-opacity);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        /* Scrollbar */
+        
+         ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+        }
+        
+         ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+        
+         ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: inherit;
+        }
+        
+        input,
+        textarea {
+            font-family: inherit;
+            color: inherit;
+        }
+        
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes borderGlow {
+            0%,
+            100% {
+                border-color: var(--border-primary);
+            }
+            50% {
+                border-color: var(--accent);
+            }
+        }
+        
+        .animate-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-1 {
+            transition-delay: 0.05s;
+        }
+        
+        .stagger-2 {
+            transition-delay: 0.1s;
+        }
+        
+        .stagger-3 {
+            transition-delay: 0.15s;
+        }
+        
+        .stagger-4 {
+            transition-delay: 0.2s;
+        }
+        
+        .stagger-5 {
+            transition-delay: 0.25s;
+        }
+        
+        .stagger-6 {
+            transition-delay: 0.3s;
+        }
+        /* ============================================
+           HEADER / NAVIGATION
+           ============================================ */
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            z-index: 1000;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-primary);
+            transition: background-color var(--transition-med), border-color var(--transition-med), transform var(--transition-med);
+            will-change: transform;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        [data-theme="dark"] .header {
+            background: rgba(10, 10, 10, 0.9);
+        }
+        
+        [data-theme="light"] .header {
+            background: rgba(240, 237, 234, 0.9);
+        }
+        
+        .header.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            color: #fff;
+            letter-spacing: -1px;
+            transition: transform var(--transition-med);
+        }
+        
+        .logo:hover .logo-icon {
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        
+        .logo-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-subtitle {
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-tertiary);
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            transition: color var(--transition-fast), background-color var(--transition-fast);
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+            background: var(--accent-muted);
+        }
+        
+        .nav-link.active {
+            color: var(--accent);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .search-trigger {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-sm);
+            color: var(--text-tertiary);
+            font-size: 13px;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            min-width: 200px;
+        }
+        
+        .search-trigger:hover {
+            border-color: var(--border-accent);
+            color: var(--text-secondary);
+        }
+        
+        .search-trigger svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        
+        .search-trigger-text {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .search-trigger kbd {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 2px 6px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-secondary);
+            border-radius: 4px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+        
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            transition: background-color var(--transition-fast);
+            color: var(--text-secondary);
+        }
+        
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            transition: transform var(--transition-med);
+        }
+        
+        .theme-toggle:hover svg {
+            transform: rotate(15deg);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: currentColor;
+            position: relative;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .mobile-menu-btn span::before,
+        .mobile-menu-btn span::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            transition: transform var(--transition-med);
+        }
+        
+        .mobile-menu-btn span::before {
+            top: -6px;
+        }
+        
+        .mobile-menu-btn span::after {
+            top: 6px;
+        }
+        
+        .mobile-menu-btn.active span {
+            background: transparent;
+        }
+        
+        .mobile-menu-btn.active span::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+        
+        .mobile-menu-btn.active span::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+        /* ============================================
+           MOBILE MENU
+           ============================================ */
+        
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: var(--header-height);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-primary);
+            z-index: 999;
+            padding: 24px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity var(--transition-med), transform var(--transition-med);
+            pointer-events: none;
+        }
+        
+        .mobile-nav.open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+        
+        .mobile-nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .mobile-nav-link {
+            display: block;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
+            background: var(--accent-muted);
+            color: var(--accent);
+        }
+        /* ============================================
+           SEARCH MODAL (CMD+K PALETTE)
+           ============================================ */
+        
+        .search-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 15vh;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-med), visibility var(--transition-med);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        [data-theme="light"] .search-overlay {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .search-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .search-modal {
+            width: 100%;
+            max-width: 680px;
+            background: var(--bg-search);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            transform: scale(0.96) translateY(-10px);
+            transition: transform var(--transition-med);
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .search-overlay.active .search-modal {
+            transform: scale(1) translateY(0);
+        }
+        
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-primary);
+            gap: 12px;
+        }
+        
+        .search-input-wrapper svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+        }
+        
+        .search-input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .search-close-btn {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: 4px;
+            color: var(--text-muted);
+            transition: all var(--transition-fast);
+        }
+        
+        .search-close-btn:hover {
+            color: var(--text-secondary);
+            border-color: var(--border-accent);
+        }
+        
+        .search-filters {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border-primary);
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .search-filters::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .search-filter-chip {
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid var(--border-primary);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        
+        .search-filter-chip:hover,
+        .search-filter-chip.active {
+            background: var(--accent-muted);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .search-results {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        
+        .search-results::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .search-result-group {
+            padding: 8px 12px 4px;
+        }
+        
+        .search-result-group-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        
+        .search-result-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .search-result-item:hover,
+        .search-result-item.selected {
+            background: var(--bg-card-hover);
+        }
+        
+        .search-result-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+        
+        .search-result-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .search-result-title {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .search-result-meta {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+        
+        .search-result-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 500;
+            flex-shrink: 0;
+            align-self: center;
+        }
+        
+        .search-empty {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-tertiary);
+        }
+        
+        .search-empty svg {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            opacity: 0.3;
+        }
+        
+        .search-empty p {
+            font-size: 14px;
+        }
+        
+        .search-footer {
+            padding: 12px 20px;
+            border-top: 1px solid var(--border-primary);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .search-footer-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .search-footer-item kbd {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 2px 5px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: 3px;
+        }
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        
+        .hero {
+            padding-top: calc(var(--header-height) + 60px);
+            padding-bottom: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(ellipse, var(--accent-muted) 0%, transparent 70%);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--accent-muted);
+            border: 1px solid var(--accent);
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.8s ease both;
+        }
+        
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(42px, 7vw, 80px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+        
+        .hero-title-accent {
+            color: var(--accent);
+            position: relative;
+        }
+        
+        .hero-description {
+            font-size: clamp(16px, 2vw, 19px);
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 620px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        .hero-search {
+            max-width: 560px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+        
+        .hero-search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-lg);
+            padding: 6px 8px 6px 20px;
+            transition: all var(--transition-med);
+            box-shadow: var(--shadow-md);
+            cursor: text;
+        }
+        
+        .hero-search-bar:hover,
+        .hero-search-bar:focus-within {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg), 0 0 0 4px var(--accent-muted);
+        }
+        
+        .hero-search-bar svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+        }
+        
+        .hero-search-input {
+            flex: 1;
+            border: none;
+            background: none;
+            outline: none;
+            padding: 12px;
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+        
+        .hero-search-input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .hero-search-btn {
+            padding: 10px 24px;
+            background: var(--accent);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+        
+        .hero-search-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        
+        .hero-search-hints {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+        
+        .hero-search-hint {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .hero-search-hint kbd {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            padding: 2px 6px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: 4px;
+        }
+        /* Stats bar */
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .hero-stat {
+            text-align: center;
+        }
+        
+        .hero-stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+        
+        .hero-stat-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        /* ============================================
+           SECTION COMMONS
+           ============================================ */
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-header {
+            margin-bottom: 48px;
+        }
+        
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.15;
+        }
+        
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            max-width: 560px;
+            line-height: 1.6;
+        }
+        /* ============================================
+           SESSION FILTER BAR
+           ============================================ */
+        
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .filter-bar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .filter-chip {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid var(--border-primary);
+            border-radius: 40px;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        
+        .filter-chip:hover {
+            border-color: var(--border-accent);
+            color: var(--text-primary);
+        }
+        
+        .filter-chip.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+        }
+        
+        .filter-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid var(--border-primary);
+            border-radius: 40px;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        
+        .filter-dropdown-btn:hover {
+            border-color: var(--border-accent);
+            color: var(--text-primary);
+        }
+        
+        .filter-dropdown-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+        /* ============================================
+           Q&A CARDS
+           ============================================ */
+        
+        .questions-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .qa-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            transition: all var(--transition-med);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+        
+        .qa-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+        
+        .qa-card:hover {
+            border-color: var(--border-accent);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .qa-card:hover::before {
+            opacity: 1;
+        }
+        
+        .qa-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .qa-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .qa-tag {
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+        }
+        
+        .qa-tag-lok {
+            background: var(--tag-lok);
+            color: var(--tag-lok-text);
+        }
+        
+        .qa-tag-rajya {
+            background: var(--tag-rajya);
+            color: var(--tag-rajya-text);
+        }
+        
+        .qa-tag-starred {
+            background: var(--tag-starred);
+            color: var(--tag-starred-text);
+        }
+        
+        .qa-tag-unstarred {
+            background: var(--tag-unstarred);
+            color: var(--tag-unstarred-text);
+        }
+        
+        .qa-card-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        
+        .qa-question {
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .qa-answer-preview {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .qa-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-primary);
+        }
+        
+        .qa-meta-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .qa-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+        
+        .qa-meta-item svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+        
+        .qa-meta-item strong {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .qa-expand-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--accent);
+            transition: all var(--transition-fast);
+        }
+        
+        .qa-expand-btn:hover {
+            color: var(--accent-hover);
+            gap: 8px;
+        }
+        
+        .qa-expand-btn svg {
+            width: 14px;
+            height: 14px;
+            transition: transform var(--transition-fast);
+        }
+        /* Expanded answer */
+        
+        .qa-full-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .qa-card.expanded .qa-full-answer {
+            max-height: 2000px;
+        }
+        
+        .qa-card.expanded .qa-answer-preview {
+            display: none;
+        }
+        
+        .qa-card.expanded .qa-expand-btn svg {
+            transform: rotate(180deg);
+        }
+        
+        .qa-full-answer-inner {
+            padding-top: 16px;
+            padding-bottom: 8px;
+        }
+        
+        .qa-full-answer-inner p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .qa-full-answer-inner p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .qa-minister-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            margin-top: 16px;
+        }
+        
+        .qa-minister-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--accent-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        
+        .qa-minister-details {
+            flex: 1;
+        }
+        
+        .qa-minister-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .qa-minister-role {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .qa-source-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+            opacity: 0.8;
+            transition: opacity var(--transition-fast);
+        }
+        
+        .qa-source-link:hover {
+            opacity: 1;
+        }
+        
+        .qa-source-link svg {
+            width: 12px;
+            height: 12px;
+        }
+        /* ============================================
+           LOAD MORE / PAGINATION
+           ============================================ */
+        
+        .load-more-wrapper {
+            text-align: center;
+            margin-top: 48px;
+        }
+        
+        .load-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+        
+        .load-more-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .load-more-btn .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--border-primary);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        
+        .load-more-btn.loading .spinner {
+            display: block;
+        }
+        
+        .load-more-btn.loading span {
+            display: none;
+        }
+        /* ============================================
+           SESSIONS PAGE
+           ============================================ */
+        
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .session-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            transition: all var(--transition-med);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .session-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .session-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--accent-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 24px;
+        }
+        
+        .session-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        
+        .session-card-dates {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+        }
+        
+        .session-card-stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .session-card-stat {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .session-card-stat strong {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        /* ============================================
+           ABOUT PAGE
+           ============================================ */
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        
+        .about-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        
+        .about-content p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        .about-features {
+            display: grid;
+            gap: 16px;
+        }
+        
+        .about-feature {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-med);
+        }
+        
+        .about-feature:hover {
+            border-color: var(--border-accent);
+        }
+        
+        .about-feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: var(--accent-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+        
+        .about-feature-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        
+        .about-feature-desc {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+        }
+        /* ============================================
+           FOOTER
+           ============================================ */
+        
+        .footer {
+            border-top: 1px solid var(--border-primary);
+            padding: 48px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+        
+        .footer-brand {
+            max-width: 280px;
+        }
+        
+        .footer-brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        
+        .footer-brand-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 16px;
+            color: #fff;
+        }
+        
+        .footer-brand-name {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 18px;
+        }
+        
+        .footer-brand p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text-tertiary);
+        }
+        
+        .footer-col-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .footer-link {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-bottom-links a {
+            color: var(--text-muted);
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-bottom-links a:hover {
+            color: var(--text-secondary);
+        }
+        /* ============================================
+           PAGE NAVIGATION (SPA-like tabs)
+           ============================================ */
+        
+        .page-section {
+            display: none;
+        }
+        
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        /* ============================================
+           AI INTEGRATION INDICATOR
+           ============================================ */
+        
+        .ai-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: var(--accent-muted);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .ai-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+        /* ============================================
+           TOAST NOTIFICATIONS
+           ============================================ */
+        
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-secondary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            font-size: 13px;
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 400px;
+        }
+        
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .toast-close {
+            margin-left: auto;
+            padding: 4px;
+            border-radius: 4px;
+            color: var(--text-muted);
+            transition: color var(--transition-fast);
+        }
+        
+        .toast-close:hover {
+            color: var(--text-primary);
+        }
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        
+        @media (max-width: 1024px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-inner {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+             :root {
+                --header-height: 64px;
+            }
+            .container {
+                padding: 0 16px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .search-trigger {
+                min-width: auto;
+                padding: 8px 12px;
+            }
+            .search-trigger-text,
+            .search-trigger kbd {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: flex;
+            }
+            .mobile-nav {
+                display: block;
+            }
+            .hero {
+                padding-top: calc(var(--header-height) + 40px);
+                padding-bottom: 60px;
+            }
+            .hero-stats {
+                gap: 24px;
+            }
+            .hero-stat-number {
+                font-size: 24px;
+            }
+            .section {
+                padding: 60px 0;
+            }
+            .qa-card {
+                padding: 20px;
+            }
+            .qa-question {
+                font-size: 15px;
+            }
+            .qa-card-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .qa-meta-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .sessions-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-inner {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            .search-modal {
+                margin: 0 16px;
+                max-height: 85vh;
+            }
+            .search-overlay {
+                padding-top: 8vh;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                letter-spacing: -1px;
+            }
+            .hero-search-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+            .hero-stats {
+                flex-wrap: wrap;
+            }
+            .filter-bar {
+                gap: 8px;
+            }
+        }
+        /* Performance: reduce motion for users who prefer it */
+        
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        /* High refresh rate optimization */
+        
+        @media (min-resolution: 2dppx) {
+            .qa-card,
+            .session-card,
+            .about-feature {
+                will-change: auto;
+            }
+        }
+        /* ============================================
+           EMPTY STATE
+           ============================================ */
+        
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            opacity: 0.4;
+        }
+        
+        .empty-state h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .empty-state p {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        /* Skeleton loader */
+        
+        .skeleton {
+            background: linear-gradient(90deg, var(--skeleton) 25%, var(--skeleton-shine) 50%, var(--skeleton) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: var(--radius-sm);
+        }
+        
+        .skeleton-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-primary);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+        }
+        
+        .skeleton-line {
+            height: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .skeleton-line:last-child {
+            margin-bottom: 0;
+        }
+        
+        .skeleton-line-sm {
+            width: 40%;
+        }
+        
+        .skeleton-line-md {
+            width: 70%;
+        }
+        
+        .skeleton-line-lg {
+            width: 90%;
+        }
+        
+        .skeleton-line-xl {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ============================================
+         HEADER
+         ============================================ -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#" class="logo" onclick="navigateTo('home'); return false;">
+                <div class="logo-icon">SQ</div>
+                <div class="logo-text">
+                    <span class="logo-title">Sansad Q&A</span>
+                    <span class="logo-subtitle">Parliament Questions</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#" class="nav-link active" data-page="home" onclick="navigateTo('home'); return false;">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="questions" onclick="navigateTo('questions'); return false;">Questions</a></li>
+                    <li><a href="#" class="nav-link" data-page="sessions" onclick="navigateTo('sessions'); return false;">Sessions</a></li>
+                    <li><a href="#" class="nav-link" data-page="about" onclick="navigateTo('about'); return false;">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="search-trigger" onclick="openSearch()" aria-label="Search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <span class="search-trigger-text">Search questions...</span>
+                    <kbd>⌘K</kbd>
+                </button>
+
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+
+                <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <ul class="mobile-nav-links">
+            <li><a href="#" class="mobile-nav-link active" data-page="home" onclick="navigateTo('home'); toggleMobileMenu(); return false;">Home</a></li>
+            <li><a href="#" class="mobile-nav-link" data-page="questions" onclick="navigateTo('questions'); toggleMobileMenu(); return false;">Questions</a></li>
+            <li><a href="#" class="mobile-nav-link" data-page="sessions" onclick="navigateTo('sessions'); toggleMobileMenu(); return false;">Sessions</a></li>
+            <li><a href="#" class="mobile-nav-link" data-page="about" onclick="navigateTo('about'); toggleMobileMenu(); return false;">About</a></li>
+        </ul>
+    </div>
+
+    <!-- ============================================
+         SEARCH MODAL
+         ============================================ -->
+    <div class="search-overlay" id="searchOverlay" onclick="closeSearchOnOverlay(event)">
+        <div class="search-modal" role="dialog" aria-label="Search">
+            <div class="search-input-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search questions, MPs, topics..." autocomplete="off">
+                <button class="search-close-btn" onclick="closeSearch()">ESC</button>
+            </div>
+            <div class="search-filters">
+                <button class="search-filter-chip active" data-filter="all" onclick="setSearchFilter('all', this)">All</button>
+                <button class="search-filter-chip" data-filter="lok-sabha" onclick="setSearchFilter('lok-sabha', this)">Lok Sabha</button>
+                <button class="search-filter-chip" data-filter="rajya-sabha" onclick="setSearchFilter('rajya-sabha', this)">Rajya Sabha</button>
+                <button class="search-filter-chip" data-filter="starred" onclick="setSearchFilter('starred', this)">Starred</button>
+                <button class="search-filter-chip" data-filter="unstarred" onclick="setSearchFilter('unstarred', this)">Unstarred</button>
+            </div>
+            <div class="search-results" id="searchResults">
+                <div class="search-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <p>Start typing to search through Parliament Q&A records</p>
+                </div>
+            </div>
+            <div class="search-footer">
+                <span class="search-footer-item"><kbd>↑↓</kbd> Navigate</span>
+                <span class="search-footer-item"><kbd>↵</kbd> Open</span>
+                <span class="search-footer-item"><kbd>esc</kbd> Close</span>
+                <span class="ai-status" style="margin-left:auto;">
+                    <span class="ai-status-dot"></span> AI-Ready
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         TOAST CONTAINER
+         ============================================ -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ============================================
+         MAIN CONTENT
+         ============================================ -->
+    <main>
+        <!-- HOME PAGE -->
+        <div class="page-section active" id="page-home">
+            <!-- Hero -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span class="hero-badge-dot"></span> Live Parliament Data
+                        </div>
+                        <h1 class="hero-title">
+                            Parliament<br>
+                            <span class="hero-title-accent">Questions</span> & Answers
+                        </h1>
+                        <p class="hero-description">
+                            Access official questions and answers from Indian Parliament sessions. Search by MP name, topic, session, or keyword. Transparent governance, accessible to every citizen.
+                        </p>
+                        <div class="hero-search">
+                            <div class="hero-search-bar" onclick="openSearch()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                <input type="text" class="hero-search-input" placeholder="Search by question, MP name, or topic..." readonly onclick="openSearch()">
+                                <button class="hero-search-btn" onclick="openSearch()">Search</button>
+                            </div>
+                            <div class="hero-search-hints">
+                                <span class="hero-search-hint">Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to search</span>
+                                <span class="hero-search-hint">or tap the search bar</span>
+                            </div>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <div class="hero-stat-number" id="statQuestions">2,847</div>
+                                <div class="hero-stat-label">Questions</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="hero-stat-number">543</div>
+                                <div class="hero-stat-label">MPs</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="hero-stat-number">12</div>
+                                <div class="hero-stat-label">Sessions</div>
+                            </div>
+                            <div class="hero-stat">
+                                <div class="hero-stat-number">68</div>
+                                <div class="hero-stat-label">Ministries</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Questions -->
+            <section class="section" id="recentQuestions">
+                <div class="container">
+                    <div class="section-header animate-in">
+                        <div class="section-label">Latest Questions</div>
+                        <h2 class="section-title">Recently Asked in Parliament</h2>
+                        <p class="section-desc">
+                            Browse the most recent questions raised by Members of Parliament across Lok Sabha and Rajya Sabha sessions.
+                        </p>
+                    </div>
+
+                    <div class="filter-bar animate-in stagger-1">
+                        <button class="filter-chip active" data-filter="all" onclick="filterQuestions('all', this)">All Houses</button>
+                        <button class="filter-chip" data-filter="Lok Sabha" onclick="filterQuestions('Lok Sabha', this)">Lok Sabha</button>
+                        <button class="filter-chip" data-filter="Rajya Sabha" onclick="filterQuestions('Rajya Sabha', this)">Rajya Sabha</button>
+                        <div style="width: 1px; height: 24px; background: var(--border-primary);"></div>
+                        <button class="filter-chip" data-filter="Starred" onclick="filterQuestions('Starred', this)">★ Starred</button>
+                        <button class="filter-chip" data-filter="Unstarred" onclick="filterQuestions('Unstarred', this)">Unstarred</button>
+                    </div>
+
+                    <div class="questions-grid" id="questionsContainer">
+                        <!-- Cards rendered by JS -->
+                    </div>
+
+                    <div class="load-more-wrapper animate-in">
+                        <button class="load-more-btn" id="loadMoreBtn" onclick="loadMoreQuestions()">
+                            <span>Load More Questions</span>
+                            <div class="spinner"></div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- QUESTIONS PAGE -->
+        <div class="page-section" id="page-questions">
+            <section class="section" style="padding-top: calc(var(--header-height) + 40px);">
+                <div class="container">
+                    <div class="section-header animate-in">
+                        <div class="section-label">All Questions</div>
+                        <h2 class="section-title">Parliament Q&A Archive</h2>
+                        <p class="section-desc">
+                            Complete archive of questions and answers from Indian Parliament sessions.
+                        </p>
+                    </div>
+
+                    <div class="filter-bar animate-in stagger-1">
+                        <button class="filter-chip active" data-filter="all" onclick="filterQuestions('all', this)">All</button>
+                        <button class="filter-chip" data-filter="Lok Sabha" onclick="filterQuestions('Lok Sabha', this)">Lok Sabha</button>
+                        <button class="filter-chip" data-filter="Rajya Sabha" onclick="filterQuestions('Rajya Sabha', this)">Rajya Sabha</button>
+                        <button class="filter-chip" data-filter="Starred" onclick="filterQuestions('Starred', this)">★ Starred</button>
+                        <button class="filter-chip" data-filter="Unstarred" onclick="filterQuestions('Unstarred', this)">Unstarred</button>
+                    </div>
+
+                    <div class="questions-grid" id="allQuestionsContainer">
+                        <!-- Cards rendered by JS -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- SESSIONS PAGE -->
+        <div class="page-section" id="page-sessions">
+            <section class="section" style="padding-top: calc(var(--header-height) + 40px);">
+                <div class="container">
+                    <div class="section-header animate-in">
+                        <div class="section-label">Parliamentary Sessions</div>
+                        <h2 class="section-title">Browse by Session</h2>
+                        <p class="section-desc">
+                            Explore questions organized by parliamentary sessions — Budget, Monsoon, and Winter.
+                        </p>
+                    </div>
+
+                    <div class="sessions-grid" id="sessionsContainer">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ABOUT PAGE -->
+        <div class="page-section" id="page-about">
+            <section class="section" style="padding-top: calc(var(--header-height) + 40px);">
+                <div class="container">
+                    <div class="section-header animate-in">
+                        <div class="section-label">About</div>
+                        <h2 class="section-title">About Sansad Q&A</h2>
+                    </div>
+
+                    <div class="about-grid">
+                        <div class="about-content animate-in">
+                            <h3>Empowering Citizens Through Transparency</h3>
+                            <p>
+                                Sansad Q&A is a platform dedicated to making Indian Parliament's question-and-answer sessions accessible to every citizen. We aggregate official data from Parliament records, the Press Information Bureau (PIB), and other government sources to present
+                                verified questions and answers in an easy-to-understand format.
+                            </p>
+                            <p>
+                                Every question you see here was officially raised by a Member of Parliament during a parliamentary session. The answers are provided by the respective government ministries. We ensure factual accuracy by cross-referencing with official Lok Sabha and Rajya
+                                Sabha records.
+                            </p>
+                            <h3 style="margin-top: 32px;">Data Sources</h3>
+                            <p>
+                                Our data is sourced from official Indian Government channels:
+                            </p>
+                            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                                <li style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary);">
+                                    <span style="color: var(--accent);">●</span> Lok Sabha Official Website (loksabha.nic.in)
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary);">
+                                    <span style="color: var(--accent);">●</span> Rajya Sabha Official Website (rajyasabha.nic.in)
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary);">
+                                    <span style="color: var(--accent);">●</span> Press Information Bureau (pib.gov.in)
+                                </li>
+                                <li style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-secondary);">
+                                    <span style="color: var(--accent);">●</span> National Informatics Centre (NIC)
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="about-features animate-in stagger-2">
+                            <div class="about-feature">
+                                <div class="about-feature-icon">🔍</div>
+                                <div>
+                                    <div class="about-feature-title">Smart Search</div>
+                                    <div class="about-feature-desc">Search by question, MP name, topic, ministry, or session with Ctrl+K shortcut.</div>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <div class="about-feature-icon">🤖</div>
+                                <div>
+                                    <div class="about-feature-title">AI-Powered</div>
+                                    <div class="about-feature-desc">Integrated with AI APIs for intelligent data retrieval and deduplication.</div>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <div class="about-feature-icon">✅</div>
+                                <div>
+                                    <div class="about-feature-title">Verified Data</div>
+                                    <div class="about-feature-desc">All Q&A sourced from official Parliament records and PIB.</div>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <div class="about-feature-icon">🌙</div>
+                                <div>
+                                    <div class="about-feature-title">Dark & Light Mode</div>
+                                    <div class="about-feature-desc">Choose your preferred viewing experience with system theme detection.</div>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <div class="about-feature-icon">📱</div>
+                                <div>
+                                    <div class="about-feature-title">Fully Responsive</div>
+                                    <div class="about-feature-desc">Optimized for all devices — desktop, tablet, and mobile at 60fps.</div>
+                                </div>
+                            </div>
+                            <div class="about-feature">
+                                <div class="about-feature-icon">🏛️</div>
+                                <div>
+                                    <div class="about-feature-title">Session Tracking</div>
+                                    <div class="about-feature-desc">Browse by Budget, Monsoon, or Winter sessions with exact dates.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo">
+                        <div class="footer-brand-icon">SQ</div>
+                        <span class="footer-brand-name">Sansad Q&A</span>
+                    </div>
+                    <p>
+                        Making Indian Parliament's question-and-answer sessions accessible to every citizen. Official data from Parliament records and PIB.
+                    </p>
+                </div>
+                <div>
+                    <div class="footer-col-title">Navigate</div>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link" onclick="navigateTo('home'); return false;">Home</a></li>
+                        <li><a href="#" class="footer-link" onclick="navigateTo('questions'); return false;">All Questions</a></li>
+                        <li><a href="#" class="footer-link" onclick="navigateTo('sessions'); return false;">Sessions</a></li>
+                        <li><a href="#" class="footer-link" onclick="navigateTo('about'); return false;">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Resources</div>
+                    <ul class="footer-links">
+                        <li><a href="https://loksabha.nic.in" target="_blank" class="footer-link">Lok Sabha ↗</a></li>
+                        <li><a href="https://rajyasabha.nic.in" target="_blank" class="footer-link">Rajya Sabha ↗</a></li>
+                        <li><a href="https://pib.gov.in" target="_blank" class="footer-link">PIB ↗</a></li>
+                        <li><a href="https://sansad.in" target="_blank" class="footer-link">Sansad TV ↗</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Legal</div>
+                    <ul class="footer-links">
+                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link">Terms of Service</a></li>
+                        <li><a href="#" class="footer-link">Data Disclaimer</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2025 Sansad Q&A. Data sourced from official Indian Parliament records.</span>
+                <div class="footer-bottom-links">
+                    <a href="#">Built for citizens</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         JAVASCRIPT
+         ============================================ -->
+    <script>
+        /* ============================================
+               DATA STORE
+               ============================================ */
+        const questionsData = [{
+            id: 1,
+            question: "Whether the Government is aware of the acute shortage of doctors and healthcare professionals in rural areas across the country and the steps being taken to address this issue?",
+            answer: "The Government is fully aware of the shortage of healthcare professionals in rural areas. As per the Rural Health Statistics 2024, there is a shortfall of approximately 83,709 doctors at Primary Health Centres (PHCs) and Community Health Centres (CHCs). To address this, the Government has taken several measures including: (a) Establishment of new medical colleges in underserved areas under the Centrally Sponsored Scheme; (b) Increasing MBBS seats from 51,348 in 2014 to 1,09,145 in 2024; (c) Compulsory rural service bonds for medical graduates from government colleges; (d) Ayushman Bharat Health and Wellness Centres providing comprehensive primary healthcare; (e) National Health Mission continuing to provide financial support to States/UTs for engagement of human resources.",
+            answerFull: "The Government is fully aware of the shortage of healthcare professionals in rural areas. As per the Rural Health Statistics 2024, there is a shortfall of approximately 83,709 doctors at Primary Health Centres (PHCs) and Community Health Centres (CHCs).\n\nTo address this, the Government has taken several measures:\n\n(a) Establishment of 157 new medical colleges in underserved areas under the Centrally Sponsored Scheme with an allocation of ₹20,000 crore.\n\n(b) The total number of MBBS seats has been increased from 51,348 in 2014 to 1,09,145 in 2024, an increase of over 112%.\n\n(c) Several states have implemented compulsory rural service bonds for medical graduates from government colleges, ranging from 1-3 years.\n\n(d) Under Ayushman Bharat, 1,60,000+ Health and Wellness Centres (AB-HWCs) have been operationalized providing comprehensive primary healthcare closer to communities.\n\n(e) The National Health Mission (NHM) continues to provide financial support to States/UTs for engagement of human resources on contractual basis including doctors, nurses, ANMs, and other healthcare workers.\n\n(f) Tele-consultation services under eSanjeevani have facilitated over 26 crore consultations, helping bridge the gap in rural healthcare access.",
+            askedBy: "Dr. Shashi Tharoor",
+            constituency: "Thiruvananthapuram, Kerala",
+            party: "INC",
+            house: "Lok Sabha",
+            session: "Budget Session 2025",
+            sessionType: "Budget",
+            date: "2025-02-10",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 142",
+            ministry: "Ministry of Health and Family Welfare",
+            answeredBy: "Shri J.P. Nadda",
+            answeredByRole: "Minister of Health and Family Welfare",
+            tags: ["health", "rural", "doctors", "healthcare"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 2,
+            question: "What is the progress of the Bharatmala Pariyojana highway development project and the total expenditure incurred so far?",
+            answer: "Under Bharatmala Pariyojana Phase-I, 34,800 km of national highways have been identified for development at an estimated cost of ₹5,35,000 crore. As of 31st January 2025, approximately 18,640 km has been awarded and about 12,850 km has been constructed and completed. The total expenditure incurred so far is ₹3,21,456 crore. The project includes development of Economic Corridors, Inter Corridors, Feeder Routes, National Corridor Efficiency Improvement, Border and International connectivity roads, and Coastal and Port connectivity roads.",
+            answerFull: "Under Bharatmala Pariyojana Phase-I, approved by the Cabinet Committee on Economic Affairs (CCEA) in October 2017, 34,800 km of national highways have been identified for development at an estimated cost of ₹5,35,000 crore (including the residual NHDP works of 10,000 km).\n\nAs of 31st January 2025:\n- Total length awarded: ~18,640 km\n- Total length constructed: ~12,850 km\n- Total expenditure: ₹3,21,456 crore\n\nThe project covers:\n(a) Economic Corridors: 9,000 km\n(b) Inter Corridors and Feeder Routes: 6,000 km\n(c) National Corridor Efficiency Improvement: 5,000 km\n(d) Border and International connectivity roads: 2,000 km\n(e) Coastal and Port connectivity roads: 2,000 km\n(f) Expressways: 800 km\n(g) Balance NHDP works: 10,000 km\n\nThe Ministry is targeting completion of Phase-I by 2027-28.",
+            askedBy: "Shri Nitin Gadkari",
+            constituency: "Nagpur, Maharashtra",
+            party: "BJP",
+            house: "Lok Sabha",
+            session: "Budget Session 2025",
+            sessionType: "Budget",
+            date: "2025-02-12",
+            questionType: "Unstarred",
+            questionNumber: "U.Q.No. 891",
+            ministry: "Ministry of Road Transport and Highways",
+            answeredBy: "Shri Nitin Gadkari",
+            answeredByRole: "Minister of Road Transport and Highways",
+            tags: ["infrastructure", "highways", "bharatmala"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 3,
+            question: "Whether the Government proposes to increase the MSP for major Kharif and Rabi crops for the year 2025-26 and if so, the details thereof?",
+            answer: "The Government has been consistently increasing the Minimum Support Prices (MSP) for all mandated Kharif and Rabi crops with a principle of fixing MSP at a level of at least 1.5 times the All India weighted average cost of production as recommended by Swaminathan Committee. For Kharif 2024-25, MSP of paddy was fixed at ₹2,300 per quintal (an increase of ₹117 over previous year). The decision on MSP for 2025-26 crops will be taken by the Cabinet Committee on Economic Affairs (CCEA) based on recommendations of the Commission for Agricultural Costs and Prices (CACP) in due course.",
+            answerFull: "The Government has been consistently increasing the Minimum Support Prices (MSP) for all 22+1 mandated Kharif and Rabi crops ensuring a return of at least 50% over the All India weighted average cost of production (A2+FL cost) as recommended by the Swaminathan Committee.\n\nFor Kharif Marketing Season 2024-25:\n- Paddy (Common): ₹2,300/quintal (Cost: ₹1,455; Return over cost: 58%)\n- Jowar (Hybrid): ₹3,371/quintal\n- Bajra: ₹2,625/quintal\n- Maize: ₹2,225/quintal\n- Tur (Arhar): ₹7,550/quintal\n- Moong: ₹8,682/quintal\n- Cotton (Medium Staple): ₹7,121/quintal\n- Soyabean: ₹4,892/quintal\n\nThe Government procurement agencies including FCI and State agencies procured approximately 782 LMT of paddy during KMS 2023-24 benefiting about 1.24 crore farmers.\n\nThe decision regarding MSP for 2025-26 crops will be taken by CCEA based on CACP recommendations which considers factors including cost of production, demand-supply conditions, market price trends, inter-crop price parity, and terms of trade between agriculture and non-agriculture sectors.",
+            askedBy: "Shri Rahul Gandhi",
+            constituency: "Wayanad, Kerala",
+            party: "INC",
+            house: "Lok Sabha",
+            session: "Budget Session 2025",
+            sessionType: "Budget",
+            date: "2025-02-14",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 203",
+            ministry: "Ministry of Agriculture and Farmers' Welfare",
+            answeredBy: "Shri Shivraj Singh Chouhan",
+            answeredByRole: "Minister of Agriculture and Farmers' Welfare",
+            tags: ["agriculture", "MSP", "farmers", "crops"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 4,
+            question: "What is the current status of implementation of the National Education Policy 2020 and the progress made in restructuring the school education system?",
+            answer: "The National Education Policy (NEP) 2020 implementation is progressing across all levels. Key achievements include: PM SHRI Schools scheme launched with 14,500+ schools being upgraded; National Curriculum Framework for Foundational Stage and School Education released; Academic Bank of Credits operationalized; Multiple Entry/Exit options introduced in higher education institutions; NIPUN Bharat Mission for Foundational Literacy and Numeracy implemented across all States/UTs; and the 5+3+3+4 curricular structure is being progressively adopted.",
+            answerFull: "The implementation of National Education Policy (NEP) 2020 is progressing comprehensively across all levels of education:\n\n**School Education:**\n(a) PM SHRI (PM Schools for Rising India) scheme launched to upgrade 14,500+ schools as exemplar schools implementing NEP.\n(b) National Curriculum Framework for Foundational Stage (NCF-FS) released in October 2022.\n(c) National Curriculum Framework for School Education (NCF-SE) released in August 2023.\n(d) NIPUN Bharat Mission launched for achieving Foundational Literacy and Numeracy by Grade 3, being implemented across all States/UTs.\n(e) The 5+3+3+4 curricular structure: Foundational (ages 3-8), Preparatory (8-11), Middle (11-14), Secondary (14-18) is being progressively adopted.\n(f) Coding and computational thinking introduced from Grade 6.\n\n**Higher Education:**\n(g) Academic Bank of Credits (ABC) operationalized with 1,900+ institutions registered.\n(h) Multiple Entry/Exit options introduced.\n(i) Four-year undergraduate programmes with research being offered.\n(j) National Research Foundation (NRF) established with ₹50,000 crore corpus.\n\n**Vocational & Digital:**\n(k) Integration of vocational education from Grade 6 onwards.\n(l) DIKSHA platform enhanced with 7.5 lakh+ e-content pieces.",
+            askedBy: "Smt. Supriya Sule",
+            constituency: "Baramati, Maharashtra",
+            party: "NCP",
+            house: "Lok Sabha",
+            session: "Winter Session 2024",
+            sessionType: "Winter",
+            date: "2024-11-28",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 87",
+            ministry: "Ministry of Education",
+            answeredBy: "Shri Dharmendra Pradhan",
+            answeredByRole: "Minister of Education",
+            tags: ["education", "NEP", "schools", "policy"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 5,
+            question: "Whether the Government is aware of the rising concerns regarding data privacy and cybersecurity threats to Indian citizens and the measures being taken?",
+            answer: "The Government is cognizant of the growing cybersecurity challenges. The Digital Personal Data Protection Act, 2023 has been enacted to safeguard citizens' data privacy. CERT-In handled 13,91,457 cyber security incidents in 2023. Key initiatives include: Cyber Surakshit Bharat programme for awareness; National Cyber Coordination Centre (NCCC) for threat monitoring; Cyber Swachhta Kendra for malware detection; and the Indian Cyber Crime Coordination Centre (I4C) with the 1930 helpline for cyber fraud reporting.",
+            answerFull: "The Government is cognizant of the growing cybersecurity challenges faced by Indian citizens in the digital era.\n\n**Legislative Framework:**\n(a) The Digital Personal Data Protection Act, 2023 has been enacted, providing a comprehensive framework for protection of personal data. Rules under the Act are being finalized.\n(b) The Information Technology Act, 2000 and its amendments provide the legal framework for addressing cybercrimes.\n\n**Incident Statistics:**\nCERT-In (Indian Computer Emergency Response Team) handled:\n- 2021: 14,02,809 incidents\n- 2022: 13,91,166 incidents  \n- 2023: 13,91,457 incidents\n- 2024 (till Nov): 12,45,673 incidents\n\n**Key Initiatives:**\n(c) Cyber Surakshit Bharat programme for building cybersecurity awareness.\n(d) National Cyber Coordination Centre (NCCC) for real-time cyber threat monitoring.\n(e) Cyber Swachhta Kendra (Botnet Cleaning and Malware Analysis Centre).\n(f) Indian Cyber Crime Coordination Centre (I4C) established under MHA.\n(g) National Cyber Crime Reporting Portal and Helpline 1930 — over 32 lakh complaints registered, ₹1,127 crore saved from fraud.\n(h) National Information Security Policy & Guidelines (NISPG) updated.",
+            askedBy: "Shri Rajeev Chandrasekhar",
+            constituency: "Nominated",
+            party: "BJP",
+            house: "Rajya Sabha",
+            session: "Winter Session 2024",
+            sessionType: "Winter",
+            date: "2024-12-03",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 156",
+            ministry: "Ministry of Electronics and Information Technology",
+            answeredBy: "Shri Ashwini Vaishnaw",
+            answeredByRole: "Minister of Electronics & IT",
+            tags: ["cybersecurity", "data privacy", "technology", "digital"],
+            source: "rajyasabha.nic.in"
+        }, {
+            id: 6,
+            question: "What is the status of Indian Railways' plan to run hydrogen fuel cell-based trains and the timeline for commercial operations?",
+            answer: "Indian Railways has undertaken a pilot project for running hydrogen fuel cell-based trains on heritage/hill routes. A Hydrogen Fuel Cell technology-based train is being developed for the Jind-Sonipat section in Haryana on a pilot basis. The project is being executed through RDSO and involves conversion of a DEMU train to run on hydrogen fuel cells. The estimated cost of the pilot project is approximately ₹112 crore. Trial runs are expected to commence by mid-2025, with commercial operations targeted by 2025-26.",
+            answerFull: "Indian Railways, as part of its commitment to become a 'net-zero' carbon emitter by 2030, has undertaken the development of hydrogen fuel cell-based trains:\n\n**Current Status:**\n(a) A pilot project for running hydrogen fuel cell-based train has been sanctioned on the Jind-Sonipat section (approximately 89 km) in Haryana.\n(b) The project involves retrofitting a Diesel Electric Multiple Unit (DEMU) train to operate on hydrogen fuel cells.\n(c) Being executed through Research Design and Standards Organisation (RDSO) in collaboration with Indian industry partners.\n(d) Estimated project cost: approximately ₹112 crore.\n\n**Timeline:**\n(e) Detailed Project Report (DPR) completed.\n(f) Hydrogen generation facility being established at Jind.\n(g) Trial runs expected to commence by mid-2025.\n(h) Commercial operations targeted by 2025-26.\n\n**Benefits:**\n(i) Zero carbon emissions during operation — only water vapour as exhaust.\n(j) Can replace diesel operations on non-electrified routes.\n(k) Estimated reduction of 0.72 kg CO2 per km compared to diesel traction.\n\n**Other Green Initiatives:**\n(l) Railway electrification has reached 93% of Broad Gauge routes (64,689 RKM).\n(m) Solar installations of 1.7 GW capacity completed across railway premises.",
+            askedBy: "Shri Derek O'Brien",
+            constituency: "Nominated",
+            party: "TMC",
+            house: "Rajya Sabha",
+            session: "Monsoon Session 2024",
+            sessionType: "Monsoon",
+            date: "2024-07-24",
+            questionType: "Unstarred",
+            questionNumber: "U.Q.No. 2134",
+            ministry: "Ministry of Railways",
+            answeredBy: "Shri Ashwini Vaishnaw",
+            answeredByRole: "Minister of Railways",
+            tags: ["railways", "hydrogen", "green energy", "transport"],
+            source: "rajyasabha.nic.in"
+        }, {
+            id: 7,
+            question: "Whether the Government has any proposal to establish semiconductor fabrication units in India and the current status of investments under the India Semiconductor Mission?",
+            answer: "Under the India Semiconductor Mission (ISM), the Government has approved proposals for establishment of semiconductor fabrication and packaging units with total investment exceeding ₹1.52 lakh crore. The approved projects include: (a) Tata Electronics semiconductor fab at Dholera, Gujarat (₹91,000 crore); (b) CG Power semiconductor unit at Sanand, Gujarat (₹7,600 crore); (c) Tata Electronics OSAT at Morigaon, Assam (₹27,000 crore); and (d) Micron Technology ATMP unit at Sanand, Gujarat (₹22,500 crore, construction progressing rapidly).",
+            answerFull: "The India Semiconductor Mission (ISM), established under the Ministry of Electronics and Information Technology with an outlay of ₹76,000 crore, has made significant progress:\n\n**Approved Projects:**\n\n(a) **Tata Electronics - Semiconductor Fab (Dholera, Gujarat)**\n   - Investment: ₹91,000 crore\n   - Technology: 28nm and below process nodes\n   - Expected production: By 2027\n   - Capacity: 50,000 wafers per month\n\n(b) **CG Power - OSAT (Sanand, Gujarat)**\n   - Investment: ₹7,600 crore\n   - Focus: Outsourced Semiconductor Assembly and Test\n\n(c) **Tata Electronics - OSAT (Morigaon, Assam)**\n   - Investment: ₹27,000 crore\n   - Focus: Advanced packaging and testing\n\n(d) **Micron Technology - ATMP (Sanand, Gujarat)**\n   - Investment: ₹22,500 crore\n   - Status: Construction progressing rapidly, first phase operational expected by late 2025\n   - Will create ~5,000 direct and ~15,000 indirect jobs\n\n**Total approved investment: ₹1,52,100+ crore**\n\nAdditionally, a robust semiconductor design ecosystem is being built with support to 100+ startups under the Design Linked Incentive (DLI) scheme.",
+            askedBy: "Shri Nishikant Dubey",
+            constituency: "Godda, Jharkhand",
+            party: "BJP",
+            house: "Lok Sabha",
+            session: "Monsoon Session 2024",
+            sessionType: "Monsoon",
+            date: "2024-07-22",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 312",
+            ministry: "Ministry of Electronics and Information Technology",
+            answeredBy: "Shri Ashwini Vaishnaw",
+            answeredByRole: "Minister of Electronics & IT",
+            tags: ["semiconductor", "technology", "manufacturing", "investment"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 8,
+            question: "What is the current status of Jal Jeevan Mission and the number of rural households provided with tap water connections?",
+            answer: "As on 31st January 2025, approximately 15.10 crore (78.8%) rural households out of 19.16 crore total have been provided with Functional Household Tap Connections (FHTCs) under Jal Jeevan Mission. At the launch of the Mission in August 2019, only 3.23 crore (16.86%) households had tap water supply. Goa, Telangana, Haryana, Gujarat, Punjab, Himachal Pradesh, and 6 other States/UTs have achieved 100% FHTC coverage. An allocation of ₹70,000 crore has been made for 2024-25.",
+            answerFull: "Jal Jeevan Mission (JJM), launched on 15th August 2019, aims to provide Functional Household Tap Connections (FHTCs) to every rural household by 2024 (extended target).\n\n**Progress as on 31st January 2025:**\n- Total rural households: 19.16 crore\n- Households with tap connections at launch (Aug 2019): 3.23 crore (16.86%)\n- Households with tap connections now: 15.10 crore (78.8%)\n- New connections provided: 11.87 crore\n\n**States/UTs with 100% coverage:**\nGoa, Telangana, Haryana, Gujarat, Punjab, Himachal Pradesh, Puducherry, D&N Haveli and Daman & Diu, Andaman & Nicobar, Mizoram, Arunachal Pradesh\n\n**Financial Progress:**\n- Total allocated since inception: ₹3,60,000 crore (Centre + State share)\n- Expenditure till date: ₹2,84,000 crore\n- Allocation for 2024-25: ₹70,000 crore\n\n**Quality Assurance:**\n- 2,24,000+ water quality testing laboratories established\n- Over 20 lakh water quality tests conducted monthly\n- Village-level Water & Sanitation Committees (VWSC) formed in 5.5 lakh villages\n\n**Impact:**\n- Significant reduction in waterborne diseases\n- Reduced drudgery for women and girls\n- Improved school attendance, especially for girls",
+            askedBy: "Smt. Hema Malini",
+            constituency: "Mathura, Uttar Pradesh",
+            party: "BJP",
+            house: "Lok Sabha",
+            session: "Winter Session 2024",
+            sessionType: "Winter",
+            date: "2024-12-06",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 198",
+            ministry: "Ministry of Jal Shakti",
+            answeredBy: "Shri C.R. Patil",
+            answeredByRole: "Minister of Jal Shakti",
+            tags: ["water", "rural", "jal jeevan", "infrastructure"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 9,
+            question: "Whether the Government proposes to bring a Uniform Civil Code and if so, the timeline and details of consultations undertaken?",
+            answer: "The 22nd Law Commission of India had invited views from the public and religious organizations on the issue of Uniform Civil Code (UCC). The Commission received over 75 lakh responses from various stakeholders. The matter is under examination. The State of Uttarakhand has enacted the Uttarakhand Uniform Civil Code, 2024 which received Presidential assent. The Government at the Centre is examining the recommendations and views received on this important matter.",
+            answerFull: "The subject of Uniform Civil Code (UCC) has been a matter of national importance as envisaged under Article 44 of the Directive Principles of State Policy of the Constitution of India.\n\n**Current Status:**\n(a) The 22nd Law Commission of India (reconstituted in 2022) took up the subject for examination.\n(b) A public notice was issued inviting views from all stakeholders, including general public, religious organizations, women's groups, and legal experts.\n(c) Over 75 lakh responses were received.\n(d) The Commission has been conducting wide consultations including with various personal law boards and religious bodies.\n\n**State-level developments:**\n(e) The State of Uttarakhand enacted the Uttarakhand Uniform Civil Code, 2024, which received Presidential assent in March 2024. Implementation has commenced from January 2025.\n\n**Government's Position:**\nThe Government believes in the importance of UCC as envisaged in the Constitution and is examining the recommendations and views received on this subject with due sensitivity and deliberation. No definitive timeline has been announced for Central legislation.",
+            askedBy: "Shri Asaduddin Owaisi",
+            constituency: "Hyderabad, Telangana",
+            party: "AIMIM",
+            house: "Lok Sabha",
+            session: "Monsoon Session 2024",
+            sessionType: "Monsoon",
+            date: "2024-08-01",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 445",
+            ministry: "Ministry of Law and Justice",
+            answeredBy: "Shri Arjun Ram Meghwal",
+            answeredByRole: "Minister of State for Law and Justice",
+            tags: ["UCC", "law", "civil code", "legislation"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 10,
+            question: "What are the details of India's space missions planned for 2025-26 including Chandrayaan-4 and Gaganyaan?",
+            answer: "ISRO has an ambitious plan for 2025-26 including: (a) Gaganyaan programme — uncrewed test flights progressing, with the first crewed mission targeted for 2026; (b) Chandrayaan-4 — approved for lunar sample return mission with an allocation of ₹2,104 crore; (c) Venus Orbiter Mission (Shukrayaan) in advanced planning; (d) NISAR satellite launch in collaboration with NASA for Earth observation; (e) SPADEX docking experiment scheduled; and (f) continuation of commercial launches through NSIL/NewSpace India Limited.",
+            answerFull: "The Indian Space Research Organisation (ISRO) and the Department of Space have an ambitious programme for 2025-26:\n\n**Gaganyaan Programme:**\n(a) Total approved cost: ₹12,962 crore\n(b) Uncrewed test flight (G1) completed successfully\n(c) Second uncrewed flight with 'Vyommitra' (humanoid robot) planned for 2025\n(d) Crew Escape System tests completed successfully\n(e) Astronaut training (4 Indian astronauts) ongoing at ISRO and with international partners\n(f) First crewed orbital mission targeted for 2026\n\n**Chandrayaan-4 (Lunar Sample Return):**\n(g) Cabinet approved with ₹2,104 crore budget\n(h) Mission to collect and return lunar soil samples\n(i) Will involve multiple modules: propulsion, transfer, ascender, descender, and re-entry\n(j) Targeted for 2028 launch\n\n**Other Missions 2025-26:**\n(k) SPADEX (Space Docking Experiment) — technology demonstrator for autonomous docking\n(l) NASA-ISRO SAR (NISAR) — joint Earth observation satellite for monitoring ecosystems and ice mass\n(m) Shukrayaan (Venus mission) — in advanced planning phase\n(n) XPoSat — already launched for X-ray polarization studies\n(o) INSAT-3DS — weather satellite successfully launched\n\n**Commercial:**\n(p) NSIL planning multiple PSLV and SSLV commercial launches\n(q) IN-SPACe has authorized 83 private space entities",
+            askedBy: "Dr. Jitendra Singh",
+            constituency: "Udhampur, J&K",
+            party: "BJP",
+            house: "Lok Sabha",
+            session: "Budget Session 2025",
+            sessionType: "Budget",
+            date: "2025-02-18",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 267",
+            ministry: "Department of Space",
+            answeredBy: "Dr. Jitendra Singh",
+            answeredByRole: "Minister of State (Independent Charge), Department of Space",
+            tags: ["space", "ISRO", "Gaganyaan", "Chandrayaan"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 11,
+            question: "Whether the Government has taken note of the increasing unemployment among educated youth and the steps being taken under various employment generation schemes?",
+            answer: "The Government has implemented multiple employment generation initiatives. The Periodic Labour Force Survey (PLFS) 2023-24 shows the unemployment rate has declined to 3.2% from 6.1% in 2017-18. Key schemes include: (a) PM-Daksh with 2.71 lakh beneficiaries; (b) PM Vishwakarma launched for traditional artisans; (c) Employment Linked Incentive (ELI) schemes announced in Budget 2024-25 with ₹2 lakh crore allocation for 4.1 crore youth; (d) Skill India Mission training 1.4 crore+ candidates; (e) Startup India recognizing 1,40,000+ startups creating over 15 lakh direct jobs.",
+            answerFull: "The Government has taken comprehensive measures to address employment generation and skill development:\n\n**Employment Statistics (PLFS 2023-24):**\n- Overall unemployment rate: 3.2% (down from 6.1% in 2017-18)\n- Urban unemployment: 5.4%\n- Rural unemployment: 2.4%\n- Labour Force Participation Rate: 59.8% (increased from 49.8% in 2017-18)\n\n**Major Employment Initiatives:**\n\n(a) **Employment Linked Incentive (ELI) Schemes (Budget 2024-25):**\n   - Scheme A: First-time employment incentive — 1 month salary (up to ₹15,000) as DST\n   - Scheme B: Manufacturing sector jobs — incentives for both employee and employer\n   - Scheme C: Employer incentives — up to ₹3,000/month for 2 years for each new employee\n   - Target: 4.1 crore youth over 5 years\n   - Allocation: ₹2 lakh crore\n\n(b) **PM Vishwakarma:** Launched for 18 traditional crafts with financial assistance, training, and market linkage.\n\n(c) **Skill India Mission:** Over 1.4 crore candidates trained through various schemes including PMKVY.\n\n(d) **Startup India:** 1,40,803 startups recognized; 15+ lakh direct jobs created.\n\n(e) **Mudra Yojana:** 46+ crore loans sanctioned worth ₹27.5+ lakh crore.\n\n(f) **PM Employment Generation Programme (PMEGP):** 8.43 lakh micro-enterprises established.",
+            askedBy: "Shri Akhilesh Yadav",
+            constituency: "Kannauj, Uttar Pradesh",
+            party: "SP",
+            house: "Lok Sabha",
+            session: "Winter Session 2024",
+            sessionType: "Winter",
+            date: "2024-11-26",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 54",
+            ministry: "Ministry of Labour and Employment",
+            answeredBy: "Dr. Mansukh Mandaviya",
+            answeredByRole: "Minister of Labour and Employment",
+            tags: ["employment", "unemployment", "youth", "skills"],
+            source: "loksabha.nic.in"
+        }, {
+            id: 12,
+            question: "What measures has the Government taken to control air pollution in Delhi-NCR and other major cities during winter months?",
+            answer: "The Government has implemented the Commission for Air Quality Management (CAQM) Act and the Graded Response Action Plan (GRAP) for Delhi-NCR. Under GRAP, action stages I to IV are triggered based on AQI levels. Additionally, the National Clean Air Programme (NCAP) covers 131 non-attainment cities with a target of 40% reduction in PM10 concentration by 2025-26. ₹10,422 crore has been released to cities under NCAP. Key interventions include real-time source apportionment studies, stubble burning monitoring through satellite, and deployment of anti-smog guns.",
+            answerFull: "The Government has taken a multi-pronged approach to combat air pollution:\n\n**For Delhi-NCR:**\n(a) Commission for Air Quality Management (CAQM) in NCR established by Act of Parliament.\n(b) Graded Response Action Plan (GRAP) revised with 4 stages:\n   - Stage I (Poor, AQI 201-300): Dust control, water sprinkling\n   - Stage II (Very Poor, AQI 301-400): Diesel generator restrictions, enhanced mechanized sweeping\n   - Stage III (Severe, AQI 401-450): Construction ban, school closures for young children\n   - Stage IV (Severe+, AQI 450+): Truck entry ban, work from home advisories\n(c) Real-time Source Apportionment Study established at 5 locations.\n(d) Stubble burning monitoring: Satellite-based detection showing 40% decline in farm fires (2024 vs 2021).\n(e) ₹3,562 crore provided under CRM for in-situ stubble management machinery.\n\n**National Clean Air Programme (NCAP):**\n(f) Covers 131 non-attainment cities across 24 States/UTs.\n(g) Target: 40% reduction in PM10 concentration by 2025-26 (base year 2017).\n(h) ₹10,422 crore released to cities.\n(i) Results showing improvement: 47 cities have shown >20% reduction in PM10 levels.\n\n**Other measures:**\n(j) BS-VI emission norms implemented nationwide.\n(k) FAME scheme for electric vehicles.\n(l) National Green Hydrogen Mission for industrial decarbonization.",
+            askedBy: "Smt. Atishi Marlena",
+            constituency: "Delhi",
+            party: "AAP",
+            house: "Rajya Sabha",
+            session: "Winter Session 2024",
+            sessionType: "Winter",
+            date: "2024-12-10",
+            questionType: "Starred",
+            questionNumber: "★ Q.No. 234",
+            ministry: "Ministry of Environment, Forest and Climate Change",
+            answeredBy: "Shri Bhupender Yadav",
+            answeredByRole: "Minister of Environment, Forest and Climate Change",
+            tags: ["pollution", "air quality", "environment", "Delhi"],
+            source: "rajyasabha.nic.in"
+        }];
+
+        const sessionsData = [{
+            id: 1,
+            name: "Budget Session 2025",
+            type: "Budget",
+            startDate: "2025-01-31",
+            endDate: "2025-05-09",
+            icon: "💰",
+            questionsLok: 847,
+            questionsRajya: 623,
+            status: "Ongoing"
+        }, {
+            id: 2,
+            name: "Winter Session 2024",
+            type: "Winter",
+            startDate: "2024-11-25",
+            endDate: "2024-12-20",
+            icon: "❄️",
+            questionsLok: 612,
+            questionsRajya: 458,
+            status: "Completed"
+        }, {
+            id: 3,
+            name: "Monsoon Session 2024",
+            type: "Monsoon",
+            startDate: "2024-07-22",
+            endDate: "2024-08-09",
+            icon: "🌧️",
+            questionsLok: 389,
+            questionsRajya: 287,
+            status: "Completed"
+        }, {
+            id: 4,
+            name: "Budget Session 2024",
+            type: "Budget",
+            startDate: "2024-01-31",
+            endDate: "2024-03-08",
+            icon: "💰",
+            questionsLok: 534,
+            questionsRajya: 412,
+            status: "Completed"
+        }, {
+            id: 5,
+            name: "Winter Session 2023",
+            type: "Winter",
+            startDate: "2023-12-04",
+            endDate: "2023-12-22",
+            icon: "❄️",
+            questionsLok: 478,
+            questionsRajya: 356,
+            status: "Completed"
+        }, {
+            id: 6,
+            name: "Monsoon Session 2023",
+            type: "Monsoon",
+            startDate: "2023-07-20",
+            endDate: "2023-08-11",
+            icon: "🌧️",
+            questionsLok: 401,
+            questionsRajya: 298,
+            status: "Completed"
+        }];
+
+        /* ============================================
+           STATE MANAGEMENT
+           ============================================ */
+        let currentFilter = 'all';
+        let searchFilter = 'all';
+        let displayedQuestions = 6;
+        let existingQuestionIds = new Set();
+
+        // Initialize existing IDs (deduplication)
+        questionsData.forEach(q => existingQuestionIds.add(q.id));
+
+        /* ============================================
+           THEME MANAGEMENT
+           ============================================ */
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('sansad-theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('sansad-theme', theme);
+            updateThemeIcon(theme);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            showToast(`Switched to ${next} mode`, 'info');
+        }
+
+        function updateThemeIcon(theme) {
+            const toggle = document.getElementById('themeToggle');
+            if (theme === 'dark') {
+                toggle.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
+            } else {
+                toggle.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+            }
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            // Show target page
+            const target = document.getElementById(`page-${page}`);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            // Update nav links
+            document.querySelectorAll('.nav-link').forEach(l => {
+                l.classList.toggle('active', l.dataset.page === page);
+            });
+            document.querySelectorAll('.mobile-nav-link').forEach(l => {
+                l.classList.toggle('active', l.dataset.page === page);
+            });
+
+            // Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // Render page-specific content
+            if (page === 'questions') {
+                renderAllQuestions();
+            } else if (page === 'sessions') {
+                renderSessions();
+            }
+
+            // Re-trigger scroll animations
+            requestAnimationFrame(() => {
+                initScrollAnimations();
+            });
+        }
+
+        /* ============================================
+           MOBILE MENU
+           ============================================ */
+        let mobileMenuOpen = false;
+
+        function toggleMobileMenu() {
+            mobileMenuOpen = !mobileMenuOpen;
+            const btn = document.getElementById('mobileMenuBtn');
+            const nav = document.getElementById('mobileNav');
+            btn.classList.toggle('active', mobileMenuOpen);
+            nav.classList.toggle('open', mobileMenuOpen);
+            document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+        }
+
+        /* ============================================
+           SEARCH
+           ============================================ */
+        let searchOpen = false;
+
+        function openSearch() {
+            searchOpen = true;
+            const overlay = document.getElementById('searchOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                document.getElementById('searchInput').focus();
+            }, 100);
+        }
+
+        function closeSearch() {
+            searchOpen = false;
+            const overlay = document.getElementById('searchOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('searchInput').value = '';
+            renderSearchResults('');
+        }
+
+        function closeSearchOnOverlay(e) {
+            if (e.target === e.currentTarget) {
+                closeSearch();
+            }
+        }
+
+        function setSearchFilter(filter, btn) {
+            searchFilter = filter;
+            document.querySelectorAll('.search-filter-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            // Re-run search
+            const query = document.getElementById('searchInput').value;
+            renderSearchResults(query);
+        }
+
+        function renderSearchResults(query) {
+            const container = document.getElementById('searchResults');
+
+            if (!query || query.length < 2) {
+                container.innerHTML = `
+                <div class="search-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <p>Start typing to search through Parliament Q&A records</p>
+                </div>
+            `;
+                return;
+            }
+
+            const q = query.toLowerCase();
+            let results = questionsData.filter(item => {
+                const matchesQuery = item.question.toLowerCase().includes(q) ||
+                    item.answer.toLowerCase().includes(q) ||
+                    item.askedBy.toLowerCase().includes(q) ||
+                    item.ministry.toLowerCase().includes(q) ||
+                    item.tags.some(t => t.toLowerCase().includes(q)) ||
+                    item.session.toLowerCase().includes(q);
+
+                if (!matchesQuery) return false;
+
+                if (searchFilter === 'all') return true;
+                if (searchFilter === 'lok-sabha') return item.house === 'Lok Sabha';
+                if (searchFilter === 'rajya-sabha') return item.house === 'Rajya Sabha';
+                if (searchFilter === 'starred') return item.questionType === 'Starred';
+                if (searchFilter === 'unstarred') return item.questionType === 'Unstarred';
+                return true;
+            });
+
+            if (results.length === 0) {
+                container.innerHTML = `
+                <div class="search-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <p>No results found for "${query}"</p>
+                </div>
+            `;
+                return;
+            }
+
+            let html = '<div class="search-result-group"><div class="search-result-group-title">Questions</div>';
+            results.forEach(item => {
+                const houseColor = item.house === 'Lok Sabha' ? 'var(--tag-lok)' : 'var(--tag-rajya)';
+                const houseTextColor = item.house === 'Lok Sabha' ? 'var(--tag-lok-text)' : 'var(--tag-rajya-text)';
+                const initials = item.askedBy.split(' ').map(n => n[0]).join('').substring(0, 2);
+
+                html += `
+                <div class="search-result-item" onclick="closeSearch(); navigateTo('questions'); scrollToQuestion(${item.id});">
+                    <div class="search-result-icon" style="background: ${houseColor}; color: ${houseTextColor};">${initials}</div>
+                    <div class="search-result-content">
+                        <div class="search-result-title">${highlightMatch(item.question.substring(0, 120) + '...', query)}</div>
+                        <div class="search-result-meta">${item.askedBy} · ${item.session} · ${formatDate(item.date)}</div>
+                    </div>
+                    <span class="search-result-badge" style="background: ${houseColor}; color: ${houseTextColor};">${item.house}</span>
+                </div>
+            `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function highlightMatch(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<strong style="color: var(--accent);">$1</strong>');
+        }
+
+        /* ============================================
+           RENDER Q&A CARDS
+           ============================================ */
+        function createQACard(item, index) {
+            const houseTag = item.house === 'Lok Sabha' ? 'qa-tag-lok' : 'qa-tag-rajya';
+            const typeTag = item.questionType === 'Starred' ? 'qa-tag-starred' : 'qa-tag-unstarred';
+            const initials = item.answeredBy.split(' ').map(n => n[0]).join('').substring(0, 2);
+
+            return `
+            <article class="qa-card animate-in stagger-${(index % 6) + 1}" id="qa-${item.id}" data-house="${item.house}" data-type="${item.questionType}" data-session="${item.sessionType}">
+                <div class="qa-card-header">
+                    <div class="qa-card-tags">
+                        <span class="qa-tag ${houseTag}">${item.house}</span>
+                        <span class="qa-tag ${typeTag}">${item.questionType}</span>
+                    </div>
+                    <span class="qa-card-number">${item.questionNumber}</span>
+                </div>
+                <h3 class="qa-question">${item.question}</h3>
+                <p class="qa-answer-preview">${item.answer}</p>
+                
+                <div class="qa-full-answer">
+                    <div class="qa-full-answer-inner">
+                        ${item.answerFull.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')}
+                        
+                        <div class="qa-minister-info">
+                            <div class="qa-minister-avatar">${initials}</div>
+                            <div class="qa-minister-details">
+                                <div class="qa-minister-name">Answered by: ${item.answeredBy}</div>
+                                <div class="qa-minister-role">${item.answeredByRole}</div>
+                            </div>
+                        </div>
+                        
+                        <a href="https://${item.source}" target="_blank" class="qa-source-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            View on ${item.source}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="qa-card-footer">
+                    <div class="qa-meta-group">
+                        <div class="qa-meta-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <strong>${item.askedBy}</strong>
+                        </div>
+                        <div class="qa-meta-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            ${formatDate(item.date)}
+                        </div>
+                        <div class="qa-meta-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                            ${item.session}
+                        </div>
+                    </div>
+                    <button class="qa-expand-btn" onclick="toggleExpand(${item.id}); event.stopPropagation();">
+                        <span>Read Full Answer</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                </div>
+            </article>
+        `;
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questionsContainer');
+        const filtered = getFilteredQuestions();
+        const toShow = filtered.slice(0, displayedQuestions);
+
+        container.innerHTML = toShow.map((q, i) => createQACard(q, i)).join('');
+
+        // Show/hide load more button
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        if (loadMoreBtn) {
+            loadMoreBtn.style.display = filtered.length > displayedQuestions ? '' : 'none';
+        }
+
+        requestAnimationFrame(() => initScrollAnimations());
+    }
+
+    function renderAllQuestions() {
+        const container = document.getElementById('allQuestionsContainer');
+        if (!container) return;
+        const filtered = getFilteredQuestions();
+        container.innerHTML = filtered.map((q, i) => createQACard(q, i)).join('');
+        requestAnimationFrame(() => initScrollAnimations());
+    }
+
+    function getFilteredQuestions() {
+        if (currentFilter === 'all') return questionsData;
+        return questionsData.filter(q => {
+            if (currentFilter === 'Lok Sabha' || currentFilter === 'Rajya Sabha') return q.house === currentFilter;
+            if (currentFilter === 'Starred' || currentFilter === 'Unstarred') return q.questionType === currentFilter;
+            return true;
+        });
+    }
+
+    function filterQuestions(filter, btn) {
+        currentFilter = filter;
+        displayedQuestions = 6;
+
+        // Update filter chips in same bar
+        const bar = btn.parentElement;
+        bar.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+
+        renderQuestions();
+        renderAllQuestions();
+    }
+
+    function loadMoreQuestions() {
+        const btn = document.getElementById('loadMoreBtn');
+        btn.classList.add('loading');
+
+        setTimeout(() => {
+            displayedQuestions += 6;
+            renderQuestions();
+            btn.classList.remove('loading');
+        }, 600);
+    }
+
+    function toggleExpand(id) {
+        const card = document.getElementById(`qa-${id}`);
+        if (card) {
+            card.classList.toggle('expanded');
+        }
+    }
+
+    function scrollToQuestion(id) {
+        setTimeout(() => {
+            const card = document.getElementById(`qa-${id}`);
+            if (card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                card.classList.add('expanded');
+                card.style.animation = 'borderGlow 2s ease';
+                setTimeout(() => {
+                    card.style.animation = '';
+                }, 2000);
+            }
+        }, 300);
+    }
+
+    /* ============================================
+       RENDER SESSIONS
+       ============================================ */
+    function renderSessions() {
+        const container = document.getElementById('sessionsContainer');
+        if (!container) return;
+
+        container.innerHTML = sessionsData.map((s, i) => `
+            <div class="session-card animate-in stagger-${(i % 6) + 1}" onclick="filterBySession('${s.type}')">
+                <div class="session-card-icon">${s.icon}</div>
+                <h3 class="session-card-title">${s.name}</h3>
+                <div class="session-card-dates">
+                    ${formatDate(s.startDate)} — ${formatDate(s.endDate)}
+                    ${s.status === 'Ongoing' ? '<span style="color: var(--success); font-weight: 600;"> · Ongoing</span>' : ''}
+                </div>
+                <div class="session-card-stats">
+                    <span class="session-card-stat"><strong>${s.questionsLok}</strong> Lok Sabha Qs</span>
+                    <span class="session-card-stat"><strong>${s.questionsRajya}</strong> Rajya Sabha Qs</span>
+                </div>
+            </div>
+        `).join('');
+
+        requestAnimationFrame(() => initScrollAnimations());
+    }
+
+    function filterBySession(sessionType) {
+        navigateTo('questions');
+        currentFilter = 'all';
+        // Filter by session type — for now we just show all and toast
+        showToast(`Showing questions from ${sessionType} sessions`, 'info');
+    }
+
+    /* ============================================
+       UTILITY FUNCTIONS
+       ============================================ */
+    function formatDate(dateStr) {
+        const date = new Date(dateStr + 'T00:00:00');
+        return date.toLocaleDateString('en-IN', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    }
+
+    /* ============================================
+       TOAST NOTIFICATIONS
+       ============================================ */
+    function showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        
+        const icons = {
+            info: '💡',
+            success: '✅',
+            warning: '⚠️',
+            error: '❌'
+        };
+
+        toast.innerHTML = `
+            <span class="toast-icon">${icons[type] || icons.info}</span>
+            <span>${message}</span>
+            <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(10px)';
+            toast.style.transition = 'all 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    /* ============================================
+       SCROLL ANIMATIONS (Intersection Observer)
+       ============================================ */
+    function initScrollAnimations() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.05,
+            rootMargin: '0px 0px -30px 0px'
+        });
+
+        document.querySelectorAll('.animate-in:not(.visible)').forEach(el => {
+            observer.observe(el);
+        });
+    }
+
+    /* ============================================
+       HEADER SCROLL BEHAVIOR
+       ============================================ */
+    let lastScrollY = 0;
+    let ticking = false;
+
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const header = document.getElementById('header');
+                const currentScrollY = window.scrollY;
+
+                if (currentScrollY > lastScrollY && currentScrollY > 200) {
+                    header.classList.add('hidden');
+                } else {
+                    header.classList.remove('hidden');
+                }
+
+                lastScrollY = currentScrollY;
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    /* ============================================
+       AI INTEGRATION STRUCTURE
+       ============================================ */
+    const AIIntegration = {
+        // Configuration for AI API integration
+        config: {
+            apiProvider: null, // 'gemini' | 'openai' | 'claude' | 'grok'
+            apiKey: null,
+            endpoint: null,
+            model: null,
+        },
+
+        // Initialize AI provider
+        init(provider, apiKey) {
+            this.config.apiProvider = provider;
+            this.config.apiKey = apiKey;
+
+            switch (provider) {
+                case 'gemini':
+                    this.config.endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+                    this.config.model = 'gemini-pro';
+                    break;
+                case 'openai':
+                    this.config.endpoint = 'https://api.openai.com/v1/chat/completions';
+                    this.config.model = 'gpt-4';
+                    break;
+                case 'claude':
+                    this.config.endpoint = 'https://api.anthropic.com/v1/messages';
+                    this.config.model = 'claude-3-sonnet-20240229';
+                    break;
+            }
+        },
+
+        // Structured prompt for fetching Parliament Q&A data
+        buildPrompt(query) {
+            return {
+                systemPrompt: `You are an expert on Indian Parliament proceedings. Your task is to provide factually correct questions and answers from official Indian Parliament sessions (Lok Sabha and Rajya Sabha). 
+                
+Always include:
+- Exact question text as recorded
+- Complete answer from the Minister/Ministry
+- Name and constituency of the MP who asked
+- Session name (Budget/Monsoon/Winter Session + Year)
+- Exact date of the question
+- Question type (Starred/Unstarred)
+- Question number
+- Responding Ministry and Minister
+- House (Lok Sabha/Rajya Sabha)
+
+Sources: Use data from official Lok Sabha (loksabha.nic.in), Rajya Sabha (rajyasabha.nic.in), and PIB (pib.gov.in) records.
+
+Return data ONLY in the following JSON format:
+{
+    "questions": [
+        {
+            "id": "unique_id",
+            "question": "full question text",
+            "answer": "summary answer (200 chars max)",
+            "answerFull": "complete detailed answer",
+            "askedBy": "MP name",
+            "constituency": "constituency, state",
+            "party": "party abbreviation",
+            "house": "Lok Sabha" or "Rajya Sabha",
+            "session": "Session Name Year",
+            "sessionType": "Budget/Monsoon/Winter",
+            "date": "YYYY-MM-DD",
+            "questionType": "Starred" or "Unstarred",
+            "questionNumber": "formatted number",
+            "ministry": "Ministry name",
+            "answeredBy": "Minister name",
+            "answeredByRole": "Minister designation",
+            "tags": ["tag1", "tag2"],
+            "source": "official source URL"
+        }
+    ]
+}
+
+IMPORTANT: Only provide factually verified information. If uncertain, indicate uncertainty. Do not fabricate data.`,
+                userQuery: query
+            };
+        },
+
+        // Fetch data from AI API
+        async fetchData(query) {
+            if (!this.config.apiKey) {
+                console.warn('AI API not configured. Using local data only.');
+                return null;
+            }
+
+            const prompt = this.buildPrompt(query);
+
+            try {
+                let response;
+                
+                switch (this.config.apiProvider) {
+                    case 'openai':
+                        response = await fetch(this.config.endpoint, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${this.config.apiKey}`
+                            },
+                            body: JSON.stringify({
+                                model: this.config.model,
+                                messages: [
+                                    { role: 'system', content: prompt.systemPrompt },
+                                    { role: 'user', content: prompt.userQuery }
+                                ],
+                                temperature: 0.1,
+                                response_format: { type: 'json_object' }
+                            })
+                        });
+                        break;
+
+                    case 'gemini':
+                        response = await fetch(`${this.config.endpoint}?key=${this.config.apiKey}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                contents: [{
+                                    parts: [{ text: `${prompt.systemPrompt}\n\nQuery: ${prompt.userQuery}` }]
+                                }],
+                                generationConfig: { temperature: 0.1 }
+                            })
+                        });
+                        break;
+
+                    case 'claude':
+                        response = await fetch(this.config.endpoint, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'x-api-key': this.config.apiKey,
+                                'anthropic-version': '2023-06-01'
+                            },
+                            body: JSON.stringify({
+                                model: this.config.model,
+                                max_tokens: 4096,
+                                system: prompt.systemPrompt,
+                                messages: [{ role: 'user', content: prompt.userQuery }]
+                            })
+                        });
+                        break;
+                }
+
+                if (!response || !response.ok) {
+                    throw new Error(`API request failed: ${response?.status}`);
+                }
+
+                const data = await response.json();
+                return this.parseResponse(data);
+
+            } catch (error) {
+                console.error('AI API Error:', error);
+                showToast('Failed to fetch AI data. Using cached results.', 'warning');
+                return null;
+            }
+        },
+
+        // Parse AI response into our data format
+        parseResponse(rawData) {
+            try {
+                let content;
+                switch (this.config.apiProvider) {
+                    case 'openai':
+                        content = JSON.parse(rawData.choices[0].message.content);
+                        break;
+                    case 'gemini':
+                        content = JSON.parse(rawData.candidates[0].content.parts[0].text);
+                        break;
+                    case 'claude':
+                        content = JSON.parse(rawData.content[0].text);
+                        break;
+                }
+                return content?.questions || [];
+            } catch (e) {
+                console.error('Failed to parse AI response:', e);
+                return [];
+            }
+        },
+
+        // Deduplicate: check if a question already exists
+        isDuplicate(newQuestion) {
+            return questionsData.some(existing => {
+                // Check by question number and session
+                if (existing.questionNumber === newQuestion.questionNumber && 
+                    existing.session === newQuestion.session) {
+                    return true;
+                }
+                // Check by question text similarity (simple approach)
+                const similarity = this.textSimilarity(
+                    existing.question.toLowerCase(),
+                    newQuestion.question.toLowerCase()
+                );
+                return similarity > 0.85;
+            });
+        },
+
+        // Simple text similarity (Jaccard index on words)
+        textSimilarity(text1, text2) {
+            const words1 = new Set(text1.split(/\s+/));
+            const words2 = new Set(text2.split(/\s+/));
+            const intersection = new Set([...words1].filter(w => words2.has(w)));
+            const union = new Set([...words1, ...words2]);
+            return intersection.size / union.size;
+        },
+
+        // Add new questions with deduplication
+        addQuestions(newQuestions) {
+            let added = 0;
+            let skipped = 0;
+
+            newQuestions.forEach(q => {
+                if (this.isDuplicate(q)) {
+                    skipped++;
+                    console.log(`Skipped duplicate: ${q.questionNumber}`);
+                    return;
+                }
+
+                // Generate unique ID
+                q.id = Date.now() + Math.random();
+                
+                // Validate required fields
+                if (!q.question || !q.answer || !q.askedBy || !q.date) {
+                    console.warn('Skipping invalid question data:', q);
+                    return;
+                }
+
+                questionsData.unshift(q);
+                existingQuestionIds.add(q.id);
+                added++;
+            });
+
+            if (added > 0) {
+                renderQuestions();
+                renderAllQuestions();
+                showToast(`Added ${added} new questions${skipped > 0 ? ` (${skipped} duplicates skipped)` : ''}`, 'success');
+            } else if (skipped > 0) {
+                showToast(`All ${skipped} questions already exist in the database`, 'info');
+            }
+
+            return { added, skipped };
+        }
+    };
+
+    /* ============================================
+       KEYBOARD SHORTCUTS
+       ============================================ */
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+K or Cmd+K to open search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            if (searchOpen) {
+                closeSearch();
+            } else {
+                openSearch();
+            }
+        }
+
+        // Escape to close search
+        if (e.key === 'Escape' && searchOpen) {
+            closeSearch();
+        }
+    });
+
+    /* ============================================
+       SEARCH INPUT HANDLER
+       ============================================ */
+    let searchDebounce;
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => {
+            renderSearchResults(e.target.value);
+        }, 200);
+    });
+
+    /* ============================================
+       SCROLL LISTENER
+       ============================================ */
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ============================================
+       INITIALIZATION
+       ============================================ */
+    function init() {
+        // Apply saved or preferred theme
+        applyTheme(getPreferredTheme());
+
+        // Render initial questions
+        renderQuestions();
+
+        // Initialize scroll animations
+        initScrollAnimations();
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('sansad-theme')) {
+                applyTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+
+        // Update Ctrl/Cmd display
+        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        document.querySelectorAll('.search-trigger kbd').forEach(kbd => {
+            kbd.textContent = isMac ? '⌘K' : 'Ctrl+K';
+        });
+        document.querySelectorAll('.hero-search-hint kbd').forEach((kbd, i) => {
+            if (i === 0) kbd.textContent = isMac ? '⌘' : 'Ctrl';
+        });
+    }
+
+    // Run initialization
+    document.addEventListener('DOMContentLoaded', init);
+
+    // If DOM already loaded
+    if (document.readyState !== 'loading') {
+        init();
+    }
+    </script>
+</body>
+
+</html>
