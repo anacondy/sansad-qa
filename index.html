@@ -2381,8 +2381,8 @@
          ============================================ -->
     <script>
         /* ============================================
-               DATA STORE
-               ============================================ */
+                       DATA STORE
+                       ============================================ */
         const questionsData = [{
             id: 1,
             question: "Whether the Government is aware of the acute shortage of doctors and healthcare professionals in rural areas across the country and the steps being taken to address this issue?",
@@ -2887,7 +2887,7 @@
             const initials = item.answeredBy.split(' ').map(n => n[0]).join('').substring(0, 2);
 
             return `
-            <article class="qa-card animate-in stagger-${(index % 6) + 1}" id="qa-${item.id}" data-house="${item.house}" data-type="${item.questionType}" data-session="${item.sessionType}">
+            <article class="qa-card animate-in stagger-${(index % 6) + 1}" id="qa-${item.id}" data-house="${item.house}" data-type="${item.questionType}" data-session="${item.sessionType}" onclick="toggleExpand(${item.id})">
                 <div class="qa-card-header">
                     <div class="qa-card-tags">
                         <span class="qa-tag ${houseTag}">${item.house}</span>
@@ -2932,7 +2932,7 @@
                             ${item.session}
                         </div>
                     </div>
-                    <button class="qa-expand-btn" onclick="toggleExpand(${item.id}); event.stopPropagation();">
+                    <button class="qa-expand-btn">
                         <span>Read Full Answer</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
