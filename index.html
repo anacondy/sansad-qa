@@ -2139,15 +2139,15 @@
                                 <div class="hero-stat-label">Questions</div>
                             </div>
                             <div class="hero-stat">
-                                <div class="hero-stat-number">543</div>
+                                <div class="hero-stat-number" id="statMPs">543</div>
                                 <div class="hero-stat-label">MPs</div>
                             </div>
                             <div class="hero-stat">
-                                <div class="hero-stat-number">12</div>
+                                <div class="hero-stat-number" id="statSessions">12</div>
                                 <div class="hero-stat-label">Sessions</div>
                             </div>
                             <div class="hero-stat">
-                                <div class="hero-stat-number">68</div>
+                                <div class="hero-stat-number" id="statMinistries">68</div>
                                 <div class="hero-stat-label">Ministries</div>
                             </div>
                         </div>
@@ -2383,7 +2383,7 @@
         /* ============================================
                DATA STORE
                ============================================ */
-        const questionsData = [{
+        const bootstrapQuestions = [{
             id: 1,
             question: "Whether the Government is aware of the acute shortage of doctors and healthcare professionals in rural areas across the country and the steps being taken to address this issue?",
             answer: "The Government is fully aware of the shortage of healthcare professionals in rural areas. As per the Rural Health Statistics 2024, there is a shortfall of approximately 83,709 doctors at Primary Health Centres (PHCs) and Community Health Centres (CHCs). To address this, the Government has taken several measures including: (a) Establishment of new medical colleges in underserved areas under the Centrally Sponsored Scheme; (b) Increasing MBBS seats from 51,348 in 2014 to 1,09,145 in 2024; (c) Compulsory rural service bonds for medical graduates from government colleges; (d) Ayushman Bharat Health and Wellness Centres providing comprehensive primary healthcare; (e) National Health Mission continuing to provide financial support to States/UTs for engagement of human resources.",
@@ -2391,7 +2391,7 @@
             askedBy: "Dr. Shashi Tharoor",
             constituency: "Thiruvananthapuram, Kerala",
             party: "INC",
-            house: "Lok Sabha",
+            house: "Rajya Sabha",
             session: "Budget Session 2025",
             sessionType: "Budget",
             date: "2025-02-10",
@@ -2518,23 +2518,23 @@
             source: "loksabha.nic.in"
         }, {
             id: 8,
-            question: "What is the current status of Jal Jeevan Mission and the number of rural households provided with tap water connections?",
-            answer: "As on 31st January 2025, approximately 15.10 crore (78.8%) rural households out of 19.16 crore total have been provided with Functional Household Tap Connections (FHTCs) under Jal Jeevan Mission. At the launch of the Mission in August 2019, only 3.23 crore (16.86%) households had tap water supply. Goa, Telangana, Haryana, Gujarat, Punjab, Himachal Pradesh, and 6 other States/UTs have achieved 100% FHTC coverage. An allocation of ₹70,000 crore has been made for 2024-25.",
-            answerFull: "Jal Jeevan Mission (JJM), launched on 15th August 2019, aims to provide Functional Household Tap Connections (FHTCs) to every rural household by 2024 (extended target).\n\n**Progress as on 31st January 2025:**\n- Total rural households: 19.16 crore\n- Households with tap connections at launch (Aug 2019): 3.23 crore (16.86%)\n- Households with tap connections now: 15.10 crore (78.8%)\n- New connections provided: 11.87 crore\n\n**States/UTs with 100% coverage:**\nGoa, Telangana, Haryana, Gujarat, Punjab, Himachal Pradesh, Puducherry, D&N Haveli and Daman & Diu, Andaman & Nicobar, Mizoram, Arunachal Pradesh\n\n**Financial Progress:**\n- Total allocated since inception: ₹3,60,000 crore (Centre + State share)\n- Expenditure till date: ₹2,84,000 crore\n- Allocation for 2024-25: ₹70,000 crore\n\n**Quality Assurance:**\n- 2,24,000+ water quality testing laboratories established\n- Over 20 lakh water quality tests conducted monthly\n- Village-level Water & Sanitation Committees (VWSC) formed in 5.5 lakh villages\n\n**Impact:**\n- Significant reduction in waterborne diseases\n- Reduced drudgery for women and girls\n- Improved school attendance, especially for girls",
-            askedBy: "Smt. Hema Malini",
-            constituency: "Mathura, Uttar Pradesh",
-            party: "BJP",
-            house: "Lok Sabha",
-            session: "Winter Session 2024",
-            sessionType: "Winter",
-            date: "2024-12-06",
-            questionType: "Starred",
-            questionNumber: "★ Q.No. 198",
+            question: "What is the latest status of Jal Jeevan Mission (Har Ghar Jal) and rural household tap water coverage?",
+            answer: "As reported by States/UTs as on 03.03.2026, under Jal Jeevan Mission more than 12.58 crore additional rural households have been provided tap water connections since launch. Out of around 19.36 crore rural households, around 15.82 crore (81.71%) households now have tap water supply, while works for the remaining 3.54 crore households are at various stages. Budgetary allocation of Rs. 67,670 crore has been made for FY 2026-27.",
+            answerFull: "Jal Jeevan Mission (JJM), launched in August 2019, aims to provide every rural household assured potable tap water supply.\n\n**Latest Progress (as on 03.03.2026):**\n- Total rural households: around 19.36 crore\n- Households with tap connections at mission start: 3.23 crore (16.7%)\n- Additional households covered since launch: 12.58+ crore\n- Households with tap water now: around 15.82 crore (81.71%)\n- Remaining households under implementation: around 3.54 crore\n\n**Functionality Assessment (2024):**\n- 98.1% surveyed households had tap connections\n- 87% households reported receiving water in the past week\n- 84% received water as per schedule\n- 80% received minimum 55 LPCD\n- 76% connections found functional considering quantity, quality, and regularity\n\n**Funding and Implementation:**\n- Budget allocation for FY 2026-27: Rs. 67,670 crore\n- State/UT-wise and district-wise progress is available on the JJM dashboard (ejalshakti.gov.in)\n- Ongoing strengthening includes village dashboards, district monitoring, and local service-delivery reforms",
+            askedBy: "Rajya Sabha Member (USQ 2641)",
+            constituency: "Rajya Sabha",
+            party: "N/A",
+            house: "Rajya Sabha",
+            session: "Budget Session 2026",
+            sessionType: "Budget",
+            date: "2026-03-16",
+            questionType: "Unstarred",
+            questionNumber: "U.Q.No. 2641",
             ministry: "Ministry of Jal Shakti",
-            answeredBy: "Shri C.R. Patil",
-            answeredByRole: "Minister of Jal Shakti",
+            answeredBy: "Shri V. Somanna",
+            answeredByRole: "Minister of State for Jal Shakti",
             tags: ["water", "rural", "jal jeevan", "infrastructure"],
-            source: "loksabha.nic.in"
+            source: "pib.gov.in/PressReleasePage.aspx?PRID=2240596"
         }, {
             id: 9,
             question: "Whether the Government proposes to bring a Uniform Civil Code and if so, the timeline and details of consultations undertaken?",
@@ -2613,7 +2613,7 @@
             source: "rajyasabha.nic.in"
         }];
 
-        const sessionsData = [{
+        let sessionsData = [{
             id: 1,
             name: "Budget Session 2025",
             type: "Budget",
@@ -2678,13 +2678,189 @@
         /* ============================================
            STATE MANAGEMENT
            ============================================ */
+        let questionsData = [...bootstrapQuestions];
         let currentFilter = 'all';
         let searchFilter = 'all';
         let displayedQuestions = 6;
         let existingQuestionIds = new Set();
+        let dataManifest = null;
+        let nextChunkIndex = 0;
+        let isChunkLoading = false;
+        let allChunksLoaded = false;
+        let searchLoadingTriggered = false;
 
         // Initialize existing IDs (deduplication)
-        questionsData.forEach(q => existingQuestionIds.add(q.id));
+        questionsData.forEach(q => {
+            existingQuestionIds.add(q.id);
+            q._searchBlob = buildSearchBlob(q);
+        });
+
+        function buildSearchBlob(item) {
+            return [
+                item.question,
+                item.answer,
+                item.askedBy,
+                item.ministry,
+                item.session,
+                item.house,
+                item.questionType,
+                ...(item.tags || [])
+            ].join(' ').toLowerCase();
+        }
+
+        function registerQuestions(batch = []) {
+            let added = 0;
+            batch.forEach((q) => {
+                if (!q || q.id === undefined || existingQuestionIds.has(q.id)) return;
+                q._searchBlob = buildSearchBlob(q);
+                questionsData.push(q);
+                existingQuestionIds.add(q.id);
+                added++;
+            });
+            if (added > 0) {
+                updateHeroStats();
+                updateSessionCountsFromData();
+            }
+            return added;
+        }
+
+        function updateSessionCountsFromData() {
+            const countsBySession = new Map();
+            questionsData.forEach((q) => {
+                const key = (q.session || '').trim();
+                if (!key) return;
+                if (!countsBySession.has(key)) {
+                    countsBySession.set(key, {
+                        lok: 0,
+                        rajya: 0,
+                        type: q.sessionType || 'Session',
+                        minDate: q.date,
+                        maxDate: q.date
+                    });
+                }
+                const row = countsBySession.get(key);
+                if (q.house === 'Lok Sabha') row.lok += 1;
+                if (q.house === 'Rajya Sabha') row.rajya += 1;
+                if (q.date && (!row.minDate || q.date < row.minDate)) row.minDate = q.date;
+                if (q.date && (!row.maxDate || q.date > row.maxDate)) row.maxDate = q.date;
+            });
+
+            // Update existing session cards.
+            sessionsData.forEach((s) => {
+                const hit = countsBySession.get(s.name);
+                if (hit) {
+                    s.questionsLok = hit.lok;
+                    s.questionsRajya = hit.rajya;
+                    if (hit.minDate) s.startDate = hit.minDate;
+                    if (hit.maxDate) s.endDate = hit.maxDate;
+                }
+            });
+
+            // Add sessions that are present in data but missing in cards.
+            countsBySession.forEach((hit, name) => {
+                if (sessionsData.some((s) => s.name === name)) return;
+                const type = hit.type || 'Session';
+                const icon = type === 'Budget' ? '💰' : (type === 'Monsoon' ? '🌧️' : (type === 'Winter' ? '❄️' : '📘'));
+                sessionsData.unshift({
+                    id: Date.now() + Math.random(),
+                    name,
+                    type,
+                    startDate: hit.minDate || new Date().toISOString().slice(0, 10),
+                    endDate: hit.maxDate || new Date().toISOString().slice(0, 10),
+                    icon,
+                    questionsLok: hit.lok,
+                    questionsRajya: hit.rajya,
+                    status: "Completed"
+                });
+            });
+        }
+
+        function updateHeroStats() {
+            const qEl = document.getElementById('statQuestions');
+            const mEl = document.getElementById('statMPs');
+            const sEl = document.getElementById('statSessions');
+            const minEl = document.getElementById('statMinistries');
+
+            const mpCount = new Set(questionsData.map(q => (q.askedBy || '').trim()).filter(Boolean)).size;
+            const sessionCount = new Set(questionsData.map(q => (q.session || '').trim()).filter(Boolean)).size;
+            const ministryCount = new Set(questionsData.map(q => (q.ministry || '').trim()).filter(Boolean)).size;
+
+            if (qEl) qEl.textContent = Number(questionsData.length || 0).toLocaleString('en-IN');
+            if (mEl) mEl.textContent = Number(mpCount).toLocaleString('en-IN');
+            if (sEl) sEl.textContent = Number(sessionCount).toLocaleString('en-IN');
+            if (minEl) minEl.textContent = Number(ministryCount).toLocaleString('en-IN');
+        }
+
+        async function loadManifest() {
+            if (dataManifest) return dataManifest;
+            try {
+                const response = await fetch('data/questions-manifest.json', { cache: 'no-cache' });
+                if (!response.ok) throw new Error(`Manifest load failed: ${response.status}`);
+                dataManifest = await response.json();
+                nextChunkIndex = 0;
+                allChunksLoaded = !Array.isArray(dataManifest.chunks) || dataManifest.chunks.length === 0;
+                return dataManifest;
+            } catch (error) {
+                console.warn('External manifest unavailable, using bootstrap data only.', error);
+                dataManifest = {
+                    chunks: [],
+                    initialChunkCount: 0
+                };
+                allChunksLoaded = true;
+                return dataManifest;
+            }
+        }
+
+        async function loadNextChunk() {
+            if (isChunkLoading || allChunksLoaded) return 0;
+            const manifest = await loadManifest();
+            const chunks = manifest.chunks || [];
+            if (nextChunkIndex >= chunks.length) {
+                allChunksLoaded = true;
+                return 0;
+            }
+
+            isChunkLoading = true;
+            const chunkPath = chunks[nextChunkIndex];
+            try {
+                const response = await fetch(chunkPath, { cache: 'no-cache' });
+                if (!response.ok) throw new Error(`Chunk load failed: ${response.status}`);
+                const payload = await response.json();
+                const records = Array.isArray(payload) ? payload : (payload.questions || []);
+                const added = registerQuestions(records);
+                nextChunkIndex += 1;
+                allChunksLoaded = nextChunkIndex >= chunks.length;
+                return added;
+            } catch (error) {
+                console.error(`Failed to load chunk ${chunkPath}`, error);
+                return 0;
+            } finally {
+                isChunkLoading = false;
+            }
+        }
+
+        async function loadInitialChunks() {
+            const manifest = await loadManifest();
+            const target = Math.max(0, Number(manifest.initialChunkCount || 0));
+            let loaded = 0;
+            while (loaded < target && !allChunksLoaded) {
+                await loadNextChunk();
+                loaded++;
+            }
+        }
+
+        async function ensureAllChunksLoadedInBackground(query = '') {
+            if (searchLoadingTriggered || allChunksLoaded) return;
+            searchLoadingTriggered = true;
+            showToast('Loading more records in background for complete search...', 'info');
+            while (!allChunksLoaded) {
+                await loadNextChunk();
+            }
+            searchLoadingTriggered = false;
+            if (query) {
+                renderSearchResults(query);
+            }
+        }
 
         /* ============================================
            THEME MANAGEMENT
@@ -2823,13 +2999,11 @@
             }
 
             const q = query.toLowerCase();
+            if (!allChunksLoaded) {
+                ensureAllChunksLoadedInBackground(query);
+            }
             let results = questionsData.filter(item => {
-                const matchesQuery = item.question.toLowerCase().includes(q) ||
-                    item.answer.toLowerCase().includes(q) ||
-                    item.askedBy.toLowerCase().includes(q) ||
-                    item.ministry.toLowerCase().includes(q) ||
-                    item.tags.some(t => t.toLowerCase().includes(q)) ||
-                    item.session.toLowerCase().includes(q);
+                const matchesQuery = (item._searchBlob || '').includes(q);
 
                 if (!matchesQuery) return false;
 
@@ -2851,8 +3025,9 @@
                 return;
             }
 
+            const limitedResults = results.slice(0, 60);
             let html = '<div class="search-result-group"><div class="search-result-group-title">Questions</div>';
-            results.forEach(item => {
+            limitedResults.forEach(item => {
                 const houseColor = item.house === 'Lok Sabha' ? 'var(--tag-lok)' : 'var(--tag-rajya)';
                 const houseTextColor = item.house === 'Lok Sabha' ? 'var(--tag-lok-text)' : 'var(--tag-rajya-text)';
                 const initials = item.askedBy.split(' ').map(n => n[0]).join('').substring(0, 2);
@@ -2868,6 +3043,9 @@
                 </div>
             `;
             });
+            if (results.length > limitedResults.length) {
+                html += `<div class="search-empty" style="padding-top: 12px;"><p>Showing ${limitedResults.length} of ${results.length} matches. Refine your search for faster results.</p></div>`;
+            }
             html += '</div>';
             container.innerHTML = html;
         }
@@ -2932,7 +3110,7 @@
                             ${item.session}
                         </div>
                     </div>
-                    <button class="qa-expand-btn" onclick="toggleExpand(${item.id}); event.stopPropagation();">
+                    <button class="qa-expand-btn" onclick="toggleExpand(event); event.stopPropagation();">
                         <span>Read Full Answer</span>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
@@ -2961,7 +3139,22 @@
         const container = document.getElementById('allQuestionsContainer');
         if (!container) return;
         const filtered = getFilteredQuestions();
-        container.innerHTML = filtered.map((q, i) => createQACard(q, i)).join('');
+        const firstPaintCount = 120;
+        const batchSize = 120;
+        container.innerHTML = filtered.slice(0, firstPaintCount).map((q, i) => createQACard(q, i)).join('');
+
+        // Progressive append keeps main thread responsive for large datasets.
+        let index = firstPaintCount;
+        const appendBatch = () => {
+            if (index >= filtered.length) return;
+            const next = filtered.slice(index, index + batchSize);
+            container.insertAdjacentHTML('beforeend', next.map((q, i) => createQACard(q, index + i)).join(''));
+            index += batchSize;
+            requestAnimationFrame(appendBatch);
+        };
+        if (filtered.length > firstPaintCount) {
+            requestAnimationFrame(appendBatch);
+        }
         requestAnimationFrame(() => initScrollAnimations());
     }
 
@@ -2987,22 +3180,31 @@
         renderAllQuestions();
     }
 
-    function loadMoreQuestions() {
+    async function loadMoreQuestions() {
         const btn = document.getElementById('loadMoreBtn');
         btn.classList.add('loading');
+
+        const filteredCount = getFilteredQuestions().length;
+        if (displayedQuestions + 6 > filteredCount && !allChunksLoaded) {
+            await loadNextChunk();
+        }
 
         setTimeout(() => {
             displayedQuestions += 6;
             renderQuestions();
             btn.classList.remove('loading');
-        }, 600);
+        }, 300);
     }
 
-    function toggleExpand(id) {
-        const card = document.getElementById(`qa-${id}`);
-        if (card) {
-            card.classList.toggle('expanded');
+    function toggleExpand(eventOrId) {
+        if (typeof eventOrId === 'number' || typeof eventOrId === 'string') {
+            const cards = document.querySelectorAll(`#qa-${eventOrId}`);
+            cards.forEach((card) => card.classList.toggle('expanded'));
+            return;
         }
+        const button = eventOrId?.currentTarget || eventOrId?.target;
+        const card = button?.closest?.('.qa-card');
+        if (card) card.classList.toggle('expanded');
     }
 
     function scrollToQuestion(id) {
@@ -3025,6 +3227,7 @@
     function renderSessions() {
         const container = document.getElementById('sessionsContainer');
         if (!container) return;
+        updateSessionCountsFromData();
 
         container.innerHTML = sessionsData.map((s, i) => `
             <div class="session-card animate-in stagger-${(i % 6) + 1}" onclick="filterBySession('${s.type}')">
@@ -3361,6 +3564,7 @@ IMPORTANT: Only provide factually verified information. If uncertain, indicate u
 
                 // Generate unique ID
                 q.id = Date.now() + Math.random();
+                q._searchBlob = buildSearchBlob(q);
                 
                 // Validate required fields
                 if (!q.question || !q.answer || !q.askedBy || !q.date) {
@@ -3374,6 +3578,7 @@ IMPORTANT: Only provide factually verified information. If uncertain, indicate u
             });
 
             if (added > 0) {
+                updateHeroStats();
                 renderQuestions();
                 renderAllQuestions();
                 showToast(`Added ${added} new questions${skipped > 0 ? ` (${skipped} duplicates skipped)` : ''}`, 'success');
@@ -3424,11 +3629,20 @@ IMPORTANT: Only provide factually verified information. If uncertain, indicate u
     /* ============================================
        INITIALIZATION
        ============================================ */
-    function init() {
+    let appInitialized = false;
+    async function init() {
+        if (appInitialized) return;
+        appInitialized = true;
+
         // Apply saved or preferred theme
         applyTheme(getPreferredTheme());
 
+        // Load initial external chunks (phase-based data ingestion)
+        await loadInitialChunks();
+
         // Render initial questions
+        updateHeroStats();
+        updateSessionCountsFromData();
         renderQuestions();
 
         // Initialize scroll animations

@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "updatedAt": "2026-04-07",
+  "initialChunkCount": 2,
+  "chunks": [
+    "data/questions-chunk-001.json",
+    "data/questions-chunk-002.json",
+    "data/questions-chunk-003.json"
+  ]
+}
